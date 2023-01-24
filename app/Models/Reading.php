@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Reading extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['reading', 'read_date', 'unit_id'];
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

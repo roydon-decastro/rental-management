@@ -9,7 +9,7 @@ class Unit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'floor', 'rent', 'type', 'meter_type', 'property_id'];
+    protected $fillable = ['name', 'function', 'floor', 'rent', 'type', 'meter_type', 'property_id'];
 
     public function property()
     {
@@ -19,5 +19,10 @@ class Unit extends Model
     public function tenants()
     {
         return $this->hasMany(Tenant::class);
+    }
+
+    public function readings()
+    {
+        return $this->hasMany(Reading::class);
     }
 }

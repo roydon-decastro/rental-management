@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('id_type');
             $table->string('id_number');
             $table->string('cellphone');
+            $table->string('email')->unique();
             $table->date('dob');
             $table->enum('sex', ['m', 'f']);
             $table->foreignId('unit_id')->constrained();

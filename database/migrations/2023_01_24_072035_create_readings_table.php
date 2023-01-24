@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('readings', function (Blueprint $table) {
             $table->id();
+            $table->integer('reading');
+            $table->date('read_date');
+            $table->foreignId('unit_id')->constrained();
             $table->timestamps();
         });
     }

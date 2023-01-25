@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceCharge extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['rate',];
 }

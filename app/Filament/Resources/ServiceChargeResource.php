@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RateResource\Pages;
-use App\Filament\Resources\RateResource\RelationManagers;
-use App\Models\Rate;
+use App\Filament\Resources\ServiceChargeResource\Pages;
+use App\Filament\Resources\ServiceChargeResource\RelationManagers;
+use App\Models\ServiceCharge;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,17 +13,15 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-
-class RateResource extends Resource
+class ServiceChargeResource extends Resource
 {
-    protected static ?string $model = Rate::class;
+    protected static ?string $model = ServiceCharge::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cash';
+    protected static ?string $navigationIcon = 'heroicon-o-receipt-tax';
 
     protected static ?string $navigationGroup = 'Property Management';
 
@@ -36,12 +34,6 @@ class RateResource extends Resource
                         TextInput::make('rate')
                             ->numeric()
                             ->required()
-                            ->mask(fn (TextInput\Mask $mask) => $mask
-                                ->numeric()
-                                ->decimalPlaces(2)
-                                ->normalizeZeros()
-                                ->decimalSeparator('.')
-                                ->thousandsSeparator(','),)
                     ])
             ]);
     }
@@ -50,7 +42,7 @@ class RateResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rate')->money('php', true),
+                TextColumn::make('rate'),
                 TextColumn::make('created_at')->date()
             ])
             ->filters([
@@ -74,9 +66,9 @@ class RateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRates::route('/'),
-            'create' => Pages\CreateRate::route('/create'),
-            'edit' => Pages\EditRate::route('/{record}/edit'),
+            'index' => Pages\ListServiceCharges::route('/'),
+            'create' => Pages\CreateServiceCharge::route('/create'),
+            'edit' => Pages\EditServiceCharge::route('/{record}/edit'),
         ];
     }
 }

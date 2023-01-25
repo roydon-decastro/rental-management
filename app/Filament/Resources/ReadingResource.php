@@ -37,9 +37,9 @@ class ReadingResource extends Resource
                         Select::make('unit_id',)
                             ->relationship('unit', 'name')->required(),
                         TextInput::make('reading')->required()->numeric(),
-                        DatePicker::make('read_date'),
+                        DatePicker::make('read_date')->default('today'),
 
-                    ])
+                    ])->columns(3)
             ]);
     }
 
@@ -49,7 +49,7 @@ class ReadingResource extends Resource
             ->columns([
                 TextColumn::make('unit.name')->sortable(),
                 TextColumn::make('reading'),
-                TextColumn::make('read_date')->date()
+                TextColumn::make('read_date')->date()->sortable()
             ])
             ->filters([
                 //

@@ -9,11 +9,12 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+
+
 use Filament\Tables\Columns\IconColumn;
-
-
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
@@ -44,7 +45,7 @@ class TenantResource extends Resource
                         TextInput::make('id_type')->required()->maxLength(255),
                         TextInput::make('id_number')->required()->maxLength(255),
                         TextInput::make('cellphone')->required()->maxLength(255),
-                            Select::make('sex')
+                        Select::make('sex')
                             ->options([
                                 'm' => 'Male',
                                 'f' => 'Female',
@@ -52,12 +53,13 @@ class TenantResource extends Resource
                         DatePicker::make('dob'),
                         Toggle::make('is_primary'),
                         Toggle::make('is_current'),
-                    ])
+                    ])->columns(3)
             ]);
     }
 
     public static function table(Table $table): Table
     {
+
         return $table
             ->columns([
                 TextColumn::make('unit.name')->sortable(),
@@ -72,11 +74,14 @@ class TenantResource extends Resource
                 IconColumn::make('is_primary')->boolean(),
                 IconColumn::make('is_current')->boolean()
             ])
+            ->defaultSort('created_at', 'asc')
             ->filters([
-                //
+                Filter::make('is_current')
+                    ->query(fn (Builder $query): Builder => $query->where('is_current', true))
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -95,6 +100,7 @@ class TenantResource extends Resource
         return [
             'index' => Pages\ListTenants::route('/'),
             'create' => Pages\CreateTenant::route('/create'),
+            'view' => Pages\ViewTenant::route('/{record}'),
             'edit' => Pages\EditTenant::route('/{record}/edit'),
         ];
     }

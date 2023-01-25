@@ -25,4 +25,9 @@ class Unit extends Model
     {
         return $this->hasMany(Reading::class);
     }
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

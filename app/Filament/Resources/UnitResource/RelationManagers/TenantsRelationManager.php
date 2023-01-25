@@ -3,12 +3,13 @@
 namespace App\Filament\Resources\UnitResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class TenantsRelationManager extends RelationManager
 {
@@ -34,6 +35,8 @@ class TenantsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('first_name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('cellphone'),
+                Tables\Columns\IconColumn::make('is_current')->boolean(),
+                // Toggle::make('is_current'),
             ])
             ->filters([
                 //

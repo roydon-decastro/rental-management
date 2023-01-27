@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TenantResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TenantResource\RelationManagers;
+use Filament\Forms\Components\Hidden;
 
 class TenantResource extends Resource
 {
@@ -39,8 +40,8 @@ class TenantResource extends Resource
                     ->schema([
                         Select::make('unit_id',)
                             ->relationship('unit', 'name')->required(),
-                        TextInput::make('last_name')->required()->maxLength(255),
-                        TextInput::make('first_name')->required()->maxLength(255),
+                        TextInput::make('name')->required()->maxLength(255),
+                        // TextInput::make('first_name')->required()->maxLength(255),
                         TextInput::make('email')->required()->maxLength(255),
                         TextInput::make('id_type')->required()->maxLength(255),
                         TextInput::make('id_number')->required()->maxLength(255),
@@ -51,8 +52,19 @@ class TenantResource extends Resource
                                 'f' => 'Female',
                             ])->required(),
                         DatePicker::make('dob'),
-                        Toggle::make('is_primary'),
-                        Toggle::make('is_current'),
+                        TextInput::make('plate')->label('Motorcycle Plate Number')->maxLength(255),
+                        Toggle::make('is_primary')
+                            ->onIcon('heroicon-o-check')
+                            ->offIcon('heroicon-o-x')
+                            ->onColor('success'),
+                        Toggle::make('is_current')
+                            ->onIcon('heroicon-o-check')
+                            ->offIcon('heroicon-o-x')
+                            ->onColor('success'),
+                        Toggle::make('has_parking')
+                            ->onIcon('heroicon-o-check')
+                            ->offIcon('heroicon-o-x')
+                            ->onColor('success'),
                     ])->columns(3)
             ]);
     }
@@ -63,21 +75,31 @@ class TenantResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('unit.name')->sortable(),
-                TextColumn::make('last_name')->sortable()->searchable(),
-                TextColumn::make('first_name')->sortable()->searchable(),
+                // TextColumn::make('Name')
+                //     ->getStateUsing(function (Tenant $record) {
+                //         // return whatever you need to show
+                //         return $record->first_name . ' ' . $record->l_name;
+                //     }),
+                TextColumn::make('name'),
                 TextColumn::make('cellphone'),
+                // TextColumn::make('plate'),
                 TextColumn::make('email'),
                 TextColumn::make('sex')->enum([
                     'm' => 'Male',
                     'f' => 'Female',
                 ]),
                 IconColumn::make('is_primary')->boolean(),
-                IconColumn::make('is_current')->boolean()
+                IconColumn::make('is_current')->boolean(),
+                IconColumn::make('has_parking')->boolean()
             ])
             ->defaultSort('created_at', 'asc')
             ->filters([
                 Filter::make('is_current')
-                    ->query(fn (Builder $query): Builder => $query->where('is_current', true))
+                    ->query(fn (Builder $query): Builder => $query->where('is_current', true)),
+                Filter::make('is_primary')
+                    ->query(fn (Builder $query): Builder => $query->where('is_primary', true)),
+                Filter::make('has_parking')
+                    ->query(fn (Builder $query): Builder => $query->where('has_parking', true))
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

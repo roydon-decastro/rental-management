@@ -10,4 +10,9 @@ class Rate extends Model
     use HasFactory;
 
     protected $fillable = ['rate',];
+
+    // public function bill()
+    // {
+    //     return $this->belongsTo(Bill::class);
+    // }
 }

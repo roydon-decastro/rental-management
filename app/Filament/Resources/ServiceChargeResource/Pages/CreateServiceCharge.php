@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateServiceCharge extends CreateRecord
 {
     protected static string $resource = ServiceChargeResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
 }

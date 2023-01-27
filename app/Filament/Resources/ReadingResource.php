@@ -20,11 +20,14 @@ use App\Filament\Resources\ReadingResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ReadingResource\RelationManagers;
 
+use App\Filament\Resources\BillResource\Pages as BillPages;
+
 class ReadingResource extends Resource
 {
     protected static ?string $model = Reading::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
+    // protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?string $navigationGroup = 'Transactions';
 
@@ -38,7 +41,6 @@ class ReadingResource extends Resource
                             ->relationship('unit', 'name')->required(),
                         TextInput::make('reading')->required()->numeric(),
                         DatePicker::make('read_date')->default('today'),
-
                     ])->columns(3)
             ]);
     }
@@ -56,6 +58,7 @@ class ReadingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                // Tables\Actions\CreateAction::make('Create Bill')->action('create_bill')
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -76,5 +79,10 @@ class ReadingResource extends Resource
             'create' => Pages\CreateReading::route('/create'),
             'edit' => Pages\EditReading::route('/{record}/edit'),
         ];
+    }
+
+    public function create_bill(): void
+    {
+        // ...
     }
 }

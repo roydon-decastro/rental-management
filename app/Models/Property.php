@@ -9,7 +9,7 @@ class Property extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address'];
+    protected $fillable = ['name', 'address', 'email', 'phone'];
 
     public function units()
     {

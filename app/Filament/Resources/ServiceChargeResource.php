@@ -42,7 +42,10 @@ class ServiceChargeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rate'),
+                TextColumn::make('rate')
+                    ->getStateUsing(function (ServiceCharge $record) {
+                        return $record->rate . ' %';
+                    }),
                 TextColumn::make('created_at')->date()
             ])
             ->filters([
@@ -50,6 +53,7 @@ class ServiceChargeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

@@ -28,4 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Route::get('/print{invoice}', PrintController::class)->name('print');
+
 require __DIR__.'/auth.php';

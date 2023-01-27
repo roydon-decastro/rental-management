@@ -15,4 +15,9 @@ class Reading extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    // public function bill()
+    // {
+    //     return $this->hasOne(Bill::class);
+    // }
 }

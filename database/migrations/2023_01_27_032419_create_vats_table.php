@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('readings', function (Blueprint $table) {
+        Schema::create('vats', function (Blueprint $table) {
             $table->id();
-            $table->double('reading', 6, 2);
-            $table->date('read_date');
-            $table->foreignId('unit_id')->constrained();
+            $table->double('rate', 6, 2);
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('readings');
+        Schema::dropIfExists('vats');
     }
 };

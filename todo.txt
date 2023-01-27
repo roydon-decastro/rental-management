@@ -1,0 +1,7 @@
+1. remove last_name and first_name, make it just last_name in tenant
+2. Add with_parking toggle
+3. Add plate number
+4. Add VAT
+5. Add previous_date and prev_reading
+7. PDF
+8. Building?

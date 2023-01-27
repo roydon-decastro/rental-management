@@ -15,17 +15,18 @@ return new class extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
-            $table->string('last_name');
-            $table->string('first_name');
-            $table->string('id_type');
-            $table->string('id_number');
-            $table->string('cellphone');
-            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('id_type')->nullable();
+            $table->string('id_number')->nullable();
+            $table->string('cellphone')->nullable();
+            $table->string('plate')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->date('dob');
             $table->enum('sex', ['m', 'f']);
             $table->foreignId('unit_id')->constrained();
             $table->boolean('is_current')->default(false);
             $table->boolean('is_primary')->default(false);
+            $table->boolean('has_parking')->default(false);
             $table->timestamps();
         });
     }

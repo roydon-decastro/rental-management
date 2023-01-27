@@ -14,6 +14,9 @@ class EditUnit extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Actions\Action::make('Print Invoice')->button()
+            // ->url(fn () => route('print', $this->record))
+            // ->openUrlInNewTab(),
         ];
     }
 }

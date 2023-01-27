@@ -31,10 +31,11 @@ class TenantsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('last_name'),
-                Tables\Columns\TextColumn::make('first_name'),
+                Tables\Columns\TextColumn::make('name'),
+                // Tables\Columns\TextColumn::make('first_name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('cellphone'),
+                Tables\Columns\TextColumn::make('plate'),
                 Tables\Columns\IconColumn::make('is_current')->boolean(),
                 // Toggle::make('is_current'),
             ])

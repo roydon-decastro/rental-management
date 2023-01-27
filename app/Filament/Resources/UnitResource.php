@@ -46,6 +46,13 @@ class UnitResource extends Resource
                                 '4th' => '4th',
                                 '5th' => '5th',
                             ])->required(),
+                        Select::make('layout')
+                            ->options([
+                                'Studio' => 'Studio',
+                                '1BR' => '1 Bedroom',
+                                '2BR' => '2 Bedroom',
+                                '3BR' => '3 Bedroom',
+                            ])->default('Studio')->required(),
                         Select::make('type')
                             ->options([
                                 'a' => 'A',
@@ -57,14 +64,14 @@ class UnitResource extends Resource
                             ->options([
                                 'lxs' => 'lxs',
                                 'lamco' => 'lamco',
-                            ])->required(),
+                            ])->default('lxs')->required(),
                         Select::make('function')
                             ->options([
                                 'residential' => 'Residential',
                                 'commercial' => 'Commercial',
                                 'mixed' => 'Mixed',
-                            ])->required(),
-                    ])
+                            ])->default('residential')->required(),
+                    ])->columns(2)
 
             ]);
     }
@@ -74,7 +81,7 @@ class UnitResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
-                TextColumn::make('rent')->money('php'),
+                TextColumn::make('rent')->money('php', true),
                 TextColumn::make('type')->enum([
                     'a' => 'A',
                     'b' => 'B',
@@ -95,7 +102,9 @@ class UnitResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -115,6 +124,7 @@ class UnitResource extends Resource
         return [
             'index' => Pages\ListUnits::route('/'),
             'create' => Pages\CreateUnit::route('/create'),
+            'view' => Pages\ViewUnit::route('/{record}'),
             'edit' => Pages\EditUnit::route('/{record}/edit'),
         ];
     }

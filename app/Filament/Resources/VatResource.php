@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RateResource\Pages;
-use App\Filament\Resources\RateResource\RelationManagers;
-use App\Models\Rate;
+use App\Filament\Resources\VatResource\Pages;
+use App\Filament\Resources\VatResource\RelationManagers;
+use App\Models\Vat;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,19 +13,20 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 
-class RateResource extends Resource
+class VatResource extends Resource
 {
-    protected static ?string $model = Rate::class;
+    protected static ?string $model = Vat::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cash';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     protected static ?string $navigationGroup = 'Property Management';
+
+
 
     public static function form(Form $form): Form
     {
@@ -34,7 +35,7 @@ class RateResource extends Resource
                 Card::make()
                     ->schema([
                         TextInput::make('rate')
-                            ->label("Rate per cubic meter")
+                            ->label("VAT")
                             ->numeric()
                             ->required()
                             ->mask(fn (TextInput\Mask $mask) => $mask
@@ -51,7 +52,7 @@ class RateResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rate')->money('php', true)->label("Rate per cubic meter"),
+                TextColumn::make('rate')->money('php', true)->label("VAT"),
                 TextColumn::make('created_at')->date()
             ])
             ->filters([
@@ -59,7 +60,6 @@ class RateResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -76,9 +76,9 @@ class RateResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRates::route('/'),
-            'create' => Pages\CreateRate::route('/create'),
-            'edit' => Pages\EditRate::route('/{record}/edit'),
+            'index' => Pages\ListVats::route('/'),
+            'create' => Pages\CreateVat::route('/create'),
+            'edit' => Pages\EditVat::route('/{record}/edit'),
         ];
     }
 }

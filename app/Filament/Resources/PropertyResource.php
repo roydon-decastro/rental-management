@@ -33,6 +33,8 @@ class PropertyResource extends Resource
                     ->schema([
                         TextInput::make('name'),
                         TextInput::make('address'),
+                        TextInput::make('email'),
+                        TextInput::make('phone'),
                     ])
             ]);
     }
@@ -42,6 +44,8 @@ class PropertyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('email'),
+                TextColumn::make('phone'),
                 TextColumn::make('address'),
             ])
             ->filters([

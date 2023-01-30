@@ -26,7 +26,7 @@ return new class extends Migration
             // $table->integer('prev_reading');
             $table->double('prev_reading', 6, 2);
             $table->date('prev_read_date');
-            $table->integer('consumption');
+            $table->double('consumption', 6, 2);
             $table->integer('prev_read_id');
             // $table->foreignId('rate_id')->constrained();
             // $table->foreignId('vat_id')->constrained();

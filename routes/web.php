@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/print{invoice}', PrintController::class)->name('print');
+Route::get('/print{bill}', PrintController::class)->name('print');
 
 require __DIR__.'/auth.php';

@@ -15,12 +15,13 @@ use Filament\Tables\Columns\TextColumn;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ReadingResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\ReadingResource\RelationManagers;
 
 use App\Filament\Resources\BillResource\Pages as BillPages;
+use App\Filament\Resources\ReadingResource\RelationManagers;
 
 class ReadingResource extends Resource
 {
@@ -53,8 +54,9 @@ class ReadingResource extends Resource
                 TextColumn::make('reading'),
                 TextColumn::make('read_date')->date()->sortable()
             ])
+            ->defaultSort('read_date', 'desc')
             ->filters([
-                //
+                SelectFilter::make('unit_name')->relationship('unit', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

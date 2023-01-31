@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tenant extends Model
+class Tenant extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['name', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking'];
+    protected $fillable = ['name', 'photo', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking'];
 
     public function unit()
     {
@@ -19,6 +21,11 @@ class Tenant extends Model
     public function bills()
     {
         return $this->hasMany(Bill::class);
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
 
     protected $casts = [

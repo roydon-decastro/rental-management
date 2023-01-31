@@ -80,7 +80,7 @@
             <td>{{ $bill->prev_reading }}</td>
         </tr>
         <tr>
-            <td>Consumption (cu.m)</td>
+            <td>Consumption (m<sup>3</sup>)</td>
             <td>:</td>
             <td>{{ $bill->consumption }}</td>
         </tr>

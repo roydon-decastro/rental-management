@@ -21,6 +21,11 @@ class Unit extends Model
         return $this->hasMany(Tenant::class);
     }
 
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
+
     public function readings()
     {
         return $this->hasMany(Reading::class);

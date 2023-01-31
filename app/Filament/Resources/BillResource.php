@@ -176,11 +176,11 @@ class BillResource extends Resource
                 SelectFilter::make('unit_name')->relationship('unit', 'name')
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\Action::make('Print Invoice')->button()
                 // ->url(fn () => route('print', $this->record))
                 // ->openUrlInNewTab(),
-                // Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

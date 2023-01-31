@@ -10,19 +10,23 @@ use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+
+
 use Filament\Forms\Components\Toggle;
-
-
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TenantResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use App\Filament\Resources\TenantResource\RelationManagers;
-use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class TenantResource extends Resource
 {
@@ -65,6 +69,9 @@ class TenantResource extends Resource
                             ->onIcon('heroicon-o-check')
                             ->offIcon('heroicon-o-x')
                             ->onColor('success'),
+                        FileUpload::make('photo')
+                        // SpatieMediaLibraryFileUpload::make('photo')->collection('tenants'),
+
                     ])->columns(3)
             ]);
     }
@@ -88,9 +95,12 @@ class TenantResource extends Resource
                     'm' => 'Male',
                     'f' => 'Female',
                 ]),
-                IconColumn::make('is_primary')->boolean(),
-                IconColumn::make('is_current')->boolean(),
-                IconColumn::make('has_parking')->boolean()
+                IconColumn::make('is_primary')->boolean()->label('Primary'),
+                IconColumn::make('is_current')->boolean()->label('Current'),
+                IconColumn::make('has_parking')->boolean()->label('Parking'),
+                ImageColumn::make('photo')
+
+                // SpatieMediaLibraryImageColumn::make('photo')->collection('tenants'),
             ])
             ->defaultSort('created_at', 'asc')
             ->filters([

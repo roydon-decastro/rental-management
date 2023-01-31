@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('photo')->nullable();
             $table->string('id_type')->nullable();
             $table->string('id_number')->nullable();
             $table->string('cellphone')->nullable();

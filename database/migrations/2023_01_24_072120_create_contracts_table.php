@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_id')->constrained();
             $table->foreignId('tenant_id')->constrained();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->enum('period', ['6 months', '1 year', '2 years', 'short term']);
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

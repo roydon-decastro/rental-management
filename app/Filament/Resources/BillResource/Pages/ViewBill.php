@@ -16,6 +16,7 @@ class ViewBill extends ViewRecord
             Actions\Action::make('Print Bill')->button()
                 ->url(fn () => route('print', $this->record))
                 ->openUrlInNewTab(),
+            Actions\EditAction::make(),
         ];
     }
 }

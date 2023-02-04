@@ -136,9 +136,9 @@
     </table>
     <hr style="border: 1px dotted">
     <p style="font-weight: bold; font-size:10; color:gray">Please pay on or before due date to avoid 5% charge for unpaid bills.</p>
-    <p style="font-weight: bold; font-size:10; color:gray">WATER TANK CLEANING SCHEDULE: Every 1st Saturday of the month</p>
+    <p style="font-weight: bold; font-size:10; color:gray">Water Tank cleaning schedule: Every 1st Saturday of the month.</p>
     <p style="font-weight: bold; font-size:10; color:gray">Reconnection fee of PHP250.00 will be charged in case of disconnection.</p>
-    <p style="font-weight: bold; font-size:10; color:gray">Please examine your bill carefully. If no complaint is made within 15 days of receipt, this bill is considered true and correct</p>
+    <p style="font-weight: bold; font-size:10; color:gray">Please examine your bill carefully. If no complaint is made within 15 days of receipt, this bill is considered true and correct.</p>
     <p style="font-weight: bold; font-size:10; color:gray">For Inquiries and concerns, please call 09985518556 / 09192907360 or email arrc.residences@gmail.com</p>
 </body>
 

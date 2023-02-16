@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->double('tier', 6, 2);
             $table->double('rate', 6, 2);
+            $table->string('notes');
             $table->timestamps();
         });
     }

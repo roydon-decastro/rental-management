@@ -33,8 +33,10 @@ class RateResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        TextInput::make('rate')
-                            ->label("Rate per cubic meter")
+                        TextInput::make('name'),
+
+                        TextInput::make('tier')
+                            ->label("Tier")
                             ->numeric()
                             ->required()
                             ->mask(fn (TextInput\Mask $mask) => $mask
@@ -42,7 +44,18 @@ class RateResource extends Resource
                                 ->decimalPlaces(2)
                                 ->normalizeZeros()
                                 ->decimalSeparator('.')
-                                ->thousandsSeparator(','),)
+                                ->thousandsSeparator(','),),
+                        TextInput::make('rate')
+                            ->label("Rate")
+                            ->numeric()
+                            ->required()
+                            ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                                ->normalizeZeros()
+                                ->decimalSeparator('.')
+                                ->thousandsSeparator(','),),
+                        TextInput::make('notes')->maxLength(30),
                     ])
             ]);
     }
@@ -51,8 +64,11 @@ class RateResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('rate')->money('php', true)->label("Rate per cubic meter"),
-                TextColumn::make('created_at')->date()
+                TextColumn::make('name'),
+                TextColumn::make('tier'),
+                TextColumn::make('rate'),
+                TextColumn::make('notes'),
+                // TextColumn::make('created_at')->date()
             ])
             ->filters([
                 //

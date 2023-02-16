@@ -37,6 +37,7 @@ class UnitResource extends Resource
                         Select::make('property_id',)
                             ->relationship('property', 'name')->required(),
                         TextInput::make('name')->required()->maxLength(255),
+                        TextInput::make('meralco')->required()->maxLength(255),
                         TextInput::make('rent')->required(),
                         Select::make('floor')
                             ->options([
@@ -81,6 +82,7 @@ class UnitResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('meralco')->sortable()->searchable(),
                 TextColumn::make('rent')->money('php', true),
                 TextColumn::make('type')->enum([
                     'a' => 'A',

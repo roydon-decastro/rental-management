@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('meralco');
             $table->enum('function', ['residential', 'commercial', 'mixed']);
             $table->enum('layout', ['Studio','1BR', '2BR', '3BR']);
             $table->enum('floor', ['1st', '2nd', '3rd', '4th', '5th']);

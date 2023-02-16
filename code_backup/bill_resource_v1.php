@@ -103,117 +103,19 @@ class BillResource extends Resource
                                 $prev_value = $reading2['reading'];
                                 $set('prev_reading', $prev_value);
                                 $set('prev_read_date', $reading2->read_date);
-                                $consumption = $get('curr_reading') - $get('prev_reading');
-                                $set('consumption', $consumption);
+                                $set('consumption', $get('curr_reading') - $get('prev_reading'));
                                 // error $set('curr_balance', $get('consumption') * $get('rate'));
-                                $rates = Rate::all();
-                                // dd($rates[3]['rate']);
-                                // dd($rates);
                                 // fyi tier 1
-                                $tier1 = 0;
-                                $tier2 = 0;
-                                $tier3 = 0;
-                                $tier4 = 0;
-                                $tier5 = 0;
-                                $tier6 = 0;
-                                $tier7 = 0;
-                                $tier8 = 0;
-                                $tier9 = 0;
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[0]['tier']) {
-                                        $tier1 = $consumption * $rates[0]['rate'];
-                                    } else {
-                                        $tier1 = $rates[0]['tier'] * $rates[0]['rate'];
-                                    }
-                                    $set('tier1', $tier1);
-
-                                }
                                 // fyi tier 2
-                                $consumption = $consumption - $rates[0]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[1]['tier']) {
-                                        $tier2 = $consumption * $rates[1]['rate'];
-                                    } else {
-                                        $tier2 = $rates[1]['tier'] * $rates[1]['rate'];
-                                    }
-                                    $set('tier2', $tier2);
-                                }
                                 // fyi tier 3
-                                $consumption = $consumption - $rates[1]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[2]['tier']) {
-                                        $tier3 = $consumption * $rates[2]['rate'];
-                                    } else {
-                                        $tier3 = $rates[2]['tier'] * $rates[2]['rate'];
-                                    }
-                                    $set('tier3', $tier3);
-                                }
                                 // fyi tier 4
-                                $consumption = $consumption - $rates[2]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[3]['tier']) {
-                                        $tier4 = $consumption * $rates[3]['rate'];
-                                    } else {
-                                        $tier4 = $rates[3]['tier'] * $rates[3]['rate'];
-                                    }
-                                    $set('tier4', $tier4);
-                                }
                                 // fyi tier 5
-                                $consumption = $consumption - $rates[3]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[4]['tier']) {
-                                        $tier5 = $consumption * $rates[4]['rate'];
-                                    } else {
-                                        $tier5 = $rates[4]['tier'] * $rates[4]['rate'];
-                                    }
-                                    $set('tier5', $tier5);
-                                }
                                 // fyi tier 6
-                                $consumption = $consumption - $rates[4]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[5]['tier']) {
-                                        $tier6 = $consumption * $rates[5]['rate'];
-                                    } else {
-                                        $tier6 = $rates[5]['tier'] * $rates[5]['rate'];
-                                    }
-                                    $set('tier6', $tier6);
-                                }
                                 // fyi tier 7
-                                $consumption = $consumption - $rates[5]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[6]['tier']) {
-                                        $tier7 = $consumption * $rates[6]['rate'];
-                                    } else {
-                                        $tier7 = $rates[6]['tier'] * $rates[6]['rate'];
-                                    }
-                                    $set('tier7', $tier7);
-                                }
                                 // fyi tier 8
-                                $consumption = $consumption - $rates[6]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[7]['tier']) {
-                                        $tier8 = $consumption * $rates[7]['rate'];
-                                    } else {
-                                        $tier8 = $rates[7]['tier'] * $rates[7]['rate'];
-                                    }
-                                    $set('tier8', $tier8);
-                                }
                                 // fyi tier 9
-                                $consumption = $consumption - $rates[7]['tier'];
-                                if ($consumption > 0) {
-                                    if ($consumption < $rates[8]['tier']) {
-                                        $tier9 = $consumption * $rates[8]['rate'];
-                                    } else {
-                                        $tier9 = $rates[8]['tier'] * $rates[8]['rate'];
-                                    }
-                                    $set('tier9', $tier9);
-                                }
-                                // $consumption = $consumption - $rates[8]['tier'];
 
-                                // dd($tier1 . ' ' . $tier2 . ' ' . $tier3 . ' ' . $tier4 . ' ' . $tier5 . ' ' . $tier6 . ' ' . $tier7 . ' ' . $tier8 . ' ' . $tier9);
-                                $current_bal = $tier1 + $tier2 + $tier3 + $tier4 + $tier5 + $tier6 + $tier7 + $tier8 + $tier9;
-
-                                $set('curr_balance', $current_bal);
+                                $set('curr_balance', $get('consumption'));
                                 $set('service_charge', $get('curr_balance') * ($get('service_charge_rate') / 100));
                                 $set('total_amount_due', $get('curr_balance') + $get('service_charge') + $get('prev_balance'));
                             })
@@ -263,20 +165,6 @@ class BillResource extends Resource
                             ->disabled(),
 
                     ])->columns(2),
-
-                Card::make()
-                ->schema([
-                    TextInput::make('tier1'),
-                    TextInput::make('tier2'),
-                    TextInput::make('tier3'),
-                    TextInput::make('tier4'),
-                    TextInput::make('tier5'),
-                    TextInput::make('tier6'),
-                    TextInput::make('tier7'),
-                    TextInput::make('tier8'),
-                    TextInput::make('tier91'),
-
-                ])->columns(3),
 
             ]);
     }

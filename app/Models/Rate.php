@@ -9,7 +9,7 @@ class Rate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rate',];
+    protected $fillable = ['name', 'tier' ,'rate', 'notes'];
 
     // public function bill()
     // {

@@ -77,6 +77,8 @@ class UnitResource extends Resource
             ]);
     }
 
+
+
     public static function table(Table $table): Table
     {
         return $table
@@ -89,7 +91,7 @@ class UnitResource extends Resource
                     'b' => 'B',
                     'c' => 'C',
                     'd' => 'D',
-                ]),
+                ])->sortable(),
                 TextColumn::make('meter_type')->enum([
                     'lxs' => 'lxs',
                     'lamco' => 'lamco',

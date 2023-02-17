@@ -10,6 +10,17 @@ class ListUnits extends ListRecords
 {
     protected static string $resource = UnitResource::class;
 
+
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'name';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'asc';
+    }
+
     protected function getActions(): array
     {
         return [

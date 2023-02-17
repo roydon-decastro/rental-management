@@ -10,6 +10,7 @@ use App\Models\Unit;
 use Filament\Tables;
 use App\Models\Tenant;
 use App\Models\Reading;
+
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use App\Models\ServiceCharge;
@@ -29,6 +30,7 @@ use Filament\Forms\Components\TextInput\Mask;
 use App\Filament\Resources\BillResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BillResource\RelationManagers;
+
 
 class BillResource extends Resource
 {
@@ -126,7 +128,6 @@ class BillResource extends Resource
                                         $tier1 = $rates[0]['tier'] * $rates[0]['rate'];
                                     }
                                     $set('tier1', $tier1);
-
                                 }
                                 // fyi tier 2
                                 $consumption = $consumption - $rates[0]['tier'];
@@ -265,18 +266,18 @@ class BillResource extends Resource
                     ])->columns(2),
 
                 Card::make()
-                ->schema([
-                    TextInput::make('tier1'),
-                    TextInput::make('tier2'),
-                    TextInput::make('tier3'),
-                    TextInput::make('tier4'),
-                    TextInput::make('tier5'),
-                    TextInput::make('tier6'),
-                    TextInput::make('tier7'),
-                    TextInput::make('tier8'),
-                    TextInput::make('tier91'),
+                    ->schema([
+                        TextInput::make('tier1'),
+                        TextInput::make('tier2'),
+                        TextInput::make('tier3'),
+                        TextInput::make('tier4'),
+                        TextInput::make('tier5'),
+                        TextInput::make('tier6'),
+                        TextInput::make('tier7'),
+                        TextInput::make('tier8'),
+                        TextInput::make('tier91'),
 
-                ])->columns(3),
+                    ])->columns(3),
 
             ]);
     }
@@ -317,6 +318,7 @@ class BillResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {

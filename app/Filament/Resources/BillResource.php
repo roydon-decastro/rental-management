@@ -202,11 +202,11 @@ class BillResource extends Resource
                                 // fyi tier 9
                                 $consumption = $consumption - $rates[7]['tier'];
                                 if ($consumption > 0) {
-                                    if ($consumption < $rates[8]['tier']) {
+                                    // if ($consumption < $rates[8]['tier']) {
                                         $tier9 = $consumption * $rates[8]['rate'];
-                                    } else {
-                                        $tier9 = $rates[8]['tier'] * $rates[8]['rate'];
-                                    }
+                                    // } else {
+                                    //     $tier9 = $rates[8]['tier'] * $rates[8]['rate'];
+                                    // }
                                     $set('tier9', $tier9);
                                 }
                                 // $consumption = $consumption - $rates[8]['tier'];
@@ -275,7 +275,7 @@ class BillResource extends Resource
                         TextInput::make('tier6'),
                         TextInput::make('tier7'),
                         TextInput::make('tier8'),
-                        TextInput::make('tier91'),
+                        TextInput::make('tier9'),
 
                     ])->columns(3),
 

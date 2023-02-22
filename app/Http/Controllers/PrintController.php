@@ -28,7 +28,7 @@ class PrintController extends Controller
 
         // dd($billDate);
         // $workerName = str($invoice->worker_name)->replace(' ', '')->headline();
-        $fileName = "bill-{$billUnit}-{$billDate}.pdf";
+        $fileName = "{$billUnit}_{$billDate}_waterbill.pdf";
         // dd($fileName);
         // $total = 0;
         // $data['details']  = Bill::all()->first();

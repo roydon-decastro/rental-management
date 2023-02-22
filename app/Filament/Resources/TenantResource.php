@@ -46,7 +46,7 @@ class TenantResource extends Resource
                             ->relationship('unit', 'name')->required(),
                         TextInput::make('name')->required()->maxLength(255),
                         // TextInput::make('first_name')->required()->maxLength(255),
-                        TextInput::make('email')->required()->maxLength(255),
+                        TextInput::make('email')->required()->maxLength(255)->unique(ignoreRecord:true),
                         TextInput::make('id_type')->required()->maxLength(255),
                         TextInput::make('id_number')->required()->maxLength(255),
                         TextInput::make('cellphone')->required()->maxLength(255),
@@ -88,6 +88,7 @@ class TenantResource extends Resource
                 //         return $record->first_name . ' ' . $record->l_name;
                 //     }),
                 TextColumn::make('name'),
+                TextColumn::make('created_at')->sortable()->hidden(),
                 TextColumn::make('cellphone'),
                 // TextColumn::make('plate'),
                 TextColumn::make('email'),
@@ -102,7 +103,7 @@ class TenantResource extends Resource
 
                 // SpatieMediaLibraryImageColumn::make('photo')->collection('tenants'),
             ])
-            ->defaultSort('created_at', 'asc')
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 Filter::make('is_current')
                     ->query(fn (Builder $query): Builder => $query->where('is_current', true)),

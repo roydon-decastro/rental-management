@@ -56,7 +56,8 @@ class ReadingResource extends Resource
             ])
             ->defaultSort('read_date', 'desc')
             ->filters([
-                SelectFilter::make('unit_name')->relationship('unit', 'name')
+                SelectFilter::make('unit_name')->relationship('unit', 'name'),
+                SelectFilter::make('created_at')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

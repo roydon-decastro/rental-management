@@ -38,6 +38,7 @@ return new class extends Migration
             $table->double('service_charge_rate', 6, 2);
             $table->double('vat', 6, 2);
             $table->double('total_amount_due', 6, 2);
+            $table->boolean('is_current')->default(false);
             $table->timestamps();
         });
     }

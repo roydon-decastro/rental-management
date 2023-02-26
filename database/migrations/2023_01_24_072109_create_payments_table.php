@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('unit_id')->constrained();
             $table->foreignId('bill_id')->constrained();
-            $table->foreignId('tenant_id')->constrained();
-            $table->double('prev_balance', 6, 2);
+            $table->double('pay_amount', 6, 2);
+            $table->date('pay_date')->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

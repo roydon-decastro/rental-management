@@ -28,7 +28,9 @@ class LatestBills extends BaseWidget
             TextColumn::make('unit_name')->label('Unit'),
             TextColumn::make('tenant_name')->label('Tenant'),
             TextColumn::make('total_amount_due')->label('Amount'),
-            TextColumn::make('bill_date')->label('Date'),
+            TextColumn::make('created_at')
+                ->dateTime('F d, Y')
+                ->label('Date'),
         ];
     }
 }

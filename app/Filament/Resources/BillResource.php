@@ -8,9 +8,11 @@ use App\Models\Bill;
 use App\Models\Rate;
 use App\Models\Unit;
 use Filament\Tables;
+use Pages\ListRates;
 use App\Models\Tenant;
-use App\Models\Reading;
 
+use App\Models\Payment;
+use App\Models\Reading;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use App\Models\ServiceCharge;
@@ -19,18 +21,21 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
+use PhpParser\Node\Expr\Cast\Double;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Components\TextInput\Mask;
 use App\Filament\Resources\BillResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BillResource\RelationManagers;
-
 
 class BillResource extends Resource
 {
@@ -203,7 +208,7 @@ class BillResource extends Resource
                                 $consumption = $consumption - $rates[7]['tier'];
                                 if ($consumption > 0) {
                                     // if ($consumption < $rates[8]['tier']) {
-                                        $tier9 = $consumption * $rates[8]['rate'];
+                                    $tier9 = $consumption * $rates[8]['rate'];
                                     // } else {
                                     //     $tier9 = $rates[8]['tier'] * $rates[8]['rate'];
                                     // }
@@ -215,7 +220,8 @@ class BillResource extends Resource
                                 $current_bal = $tier1 + $tier2 + $tier3 + $tier4 + $tier5 + $tier6 + $tier7 + $tier8 + $tier9;
 
                                 $set('curr_balance', $current_bal);
-                                $set('service_charge', $get('curr_balance') * ($get('service_charge_rate') / 100));
+                                // $set('service_charge', $get('curr_balance') * ($get('service_charge_rate') / 100)); // fyi ok
+                                $set('service_charge', number_format($get('curr_balance') * ($get('service_charge_rate') / 100), 2)); // fyi testing
                                 $set('total_amount_due', $get('curr_balance') + $get('service_charge') + $get('prev_balance'));
                             })
                             ->reactive(),
@@ -286,14 +292,16 @@ class BillResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('unit_name')->sortable(),
-                TextColumn::make('tenant_name')->sortable(),
+                TextColumn::make('unit_name')->sortable()->label('Unit'),
+                TextColumn::make('tenant_name')->sortable()->label('Name'),
                 TextColumn::make('prev_read_date')->label('From Date'),
                 TextColumn::make('curr_read_date')->label('To Date')->sortable(),
-                TextColumn::make('prev_reading'),
-                TextColumn::make('curr_reading'),
+                TextColumn::make('curr_reading')->label('Curr'),
+                TextColumn::make('prev_reading')->label('Prev'),
                 TextColumn::make('consumption'),
-                TextColumn::make('total_amount_due'),
+                TextColumn::make('total_amount_due')->label('Amount'),
+                IconColumn::make('is_paid')->boolean()->label('Paid'),
+                // TextColumn::make('total_amount_due'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -303,12 +311,93 @@ class BillResource extends Resource
                 // Tables\Actions\ViewAction::make(),
                 // Tables\Actions\Action::make('Print Invoice')->button()
                 // ->url(fn () => route('print', $this->record))
-                // ->openUrlInNewTab(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('Add Payment')
+                    ->action(function (Bill $record, array $data): void {
+                        // dd($record);
+                        // dd($data);
+                        $payment = new Payment;
+                        $payment->bill_id = $record->id;
+                        $payment->pay_amount = $data['pay_amount'];
+                        $payment->pay_date = $data['pay_date'];
+                        $payment->pay_method = $data['pay_method'];
+                        $payment->save();
+                        $record->is_paid = 1;
+                        $record->save();
+                    })
+                    ->requiresConfirmation()
+
+
+
+                    ->form([
+                        Forms\Components\TextInput::make('pay_amount')
+                            ->label('Amount Paid')
+                            ->default(function (Bill $record): string {
+                                return $record['total_amount_due'];
+                            })
+                            ->required(),
+                        DatePicker::make('pay_date')->default('today'),
+                        Select::make('pay_method')
+                            ->options([
+                                'Gcash' => 'Gcash',
+                                'Cash' => 'Cash',
+                                'BPI' => 'BPI',
+                                'BDO' => 'BDO',
+                            ])
+                            ->default('Gcash')
+                            ->required(),
+                    ])
+
+
+
+
+                    ->color('success')
+                    ->icon('heroicon-o-cash'),
+                //     ->route('rate'),
+                Tables\Actions\Action::make('print')
+                    ->url(fn (Bill $record): string => route('print', $record))
+                    ->openUrlInNewTab()
+                    // ->action(function (Bill $record): void {
+                    //     $this->dispatchBrowserEvent('print', [
+                    //         'post' => $record->getKey(),
+                    //     ]);
+                    // })
+                    ->icon('heroicon-o-printer')
+                    ->label('PDF'),
+                // Tables\Actions\DeleteAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                BulkAction::make('Generate Bills')
+                    // ->action(fn (Collection $records) => $records->each
+                    // ->url(fn () => route('print', $records))
+                    // ->openUrlInNewTab(),
+                    // )
+                    ->action(function (Collection $records, array $data): void {
+                        // dd($records);
+                        // dd($data);
+                        foreach ($records as $record) {
+                            // dd($record);
+                            route('print', $record);
+                            // if ($record->assigned != 1) {
+                            // dd($incomingLevel);
+                            // $record->level_id = $data['level_id'];
+                            // $section_student = new SectionStudent;
+                            // $section_student->school_id = 2; // getback
+                            // $section_student->schoolyear_id = $data['schoolyear_id'];
+                            // $section_student->level_id = $data['level_id'];
+                            // $section_student->section_id = $data['section_id'];
+                            // $section_student->student_id = $record->id;
+                            // $record->assigned = 1;
+                            // $record->save();
+                            // $section_student->save();
+                            // }
+                        }
+                    })
+                    ->requiresConfirmation()
+                    ->deselectRecordsAfterCompletion()
+                    ->color('success')
+                    ->icon('heroicon-o-user-group')
             ]);
     }
 
@@ -327,6 +416,7 @@ class BillResource extends Resource
             'create' => Pages\CreateBill::route('/create'),
             'view' => Pages\ViewBill::route('/{record}'),
             'edit' => Pages\EditBill::route('/{record}/edit'),
+            // 'rate' => ListRatuy56yrtetes::route('/rates')
         ];
     }
 }

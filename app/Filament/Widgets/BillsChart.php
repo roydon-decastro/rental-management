@@ -14,6 +14,8 @@ class BillsChart extends BarChartWidget
 
     protected static ?int $sort = 0;
 
+    protected int | string | array $columnSpan = 'full';
+
     protected function getData(): array
     {
         $trend = Trend::model(Bill::class)
@@ -37,8 +39,8 @@ class BillsChart extends BarChartWidget
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(153, 102, 255, 0.2)',
                         'rgba(201, 203, 207, 0.2)'
-                     ],
-                     'borderColor' => [
+                    ],
+                    'borderColor' => [
                         'rgb(255, 99, 132)',
                         'rgb(255, 159, 64)',
                         'rgb(255, 205, 86)',
@@ -46,8 +48,8 @@ class BillsChart extends BarChartWidget
                         'rgb(54, 162, 235)',
                         'rgb(153, 102, 255)',
                         'rgb(201, 203, 207)'
-                     ],
-                     'borderWidth' => 1
+                    ],
+                    'borderWidth' => 1
                 ],
             ],
             'labels' =>  $trend->map(fn (TrendValue $value) => $value->date),

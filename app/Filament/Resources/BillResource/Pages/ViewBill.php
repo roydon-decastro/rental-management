@@ -17,6 +17,7 @@ class ViewBill extends ViewRecord
                 ->url(fn () => route('print', $this->record))
                 ->openUrlInNewTab(),
             Actions\EditAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }

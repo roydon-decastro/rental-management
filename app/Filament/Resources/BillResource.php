@@ -325,10 +325,20 @@ class BillResource extends Resource
                         $record->save();
                     })
                     ->requiresConfirmation()
+                    ->modalButton('Add Payment')
 
 
 
                     ->form([
+                        // Card::make()
+                        // ->schema([
+                        Forms\Components\TextInput::make('unit')
+                            ->label('For Unit')
+                            ->default(function (Bill $record): string {
+                                return $record['unit_name'];
+                            })
+                            ->disabled()
+                            ,
                         Forms\Components\TextInput::make('pay_amount')
                             ->label('Amount Paid')
                             ->default(function (Bill $record): string {
@@ -345,6 +355,8 @@ class BillResource extends Resource
                             ])
                             ->default('Gcash')
                             ->required(),
+
+                    // ])->columns(2),
                     ])
 
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\ReceiptController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +31,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/print{bill}', PrintController::class)->name('print');
+Route::get('/receipt/{payment}', ReceiptController::class)->name('receipt');
 
 require __DIR__.'/auth.php';

@@ -51,8 +51,8 @@ class PaymentResource extends Resource
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\Action::make('Print')->label('Print AR')
                 //     ->icon('heroicon-o-printer'),
-                Tables\Actions\Action::make('print')
-                    ->url(fn (Payment $record): string => route('print', $record))
+                Tables\Actions\Action::make('receipt')
+                    ->url(fn (Payment $record): string => route('receipt', $record))
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-printer')
                     ->label('AR PDF'),

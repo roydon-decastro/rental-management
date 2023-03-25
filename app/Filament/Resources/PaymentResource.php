@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Payment;
@@ -46,6 +47,7 @@ class PaymentResource extends Resource
                 TextColumn::make('pay_amount')->sortable(),
                 TextColumn::make('pay_method')->sortable(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([])
             ->actions([
                 // Tables\Actions\EditAction::make(),
@@ -68,6 +70,12 @@ class PaymentResource extends Resource
         return [
             //
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereMonth('payments.created_at', Carbon::now()->month)
+            ->count();
     }
 
     public static function getPages(): array

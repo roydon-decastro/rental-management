@@ -29,6 +29,11 @@ class Bill extends Model
         'total_amount_due',
     ];
 
+    protected $casts = [
+        'is_paid' => 'boolean',
+    ];
+
+
     public function unit()
     {
         return $this->belongsTo(Unit::class);

@@ -11,7 +11,7 @@ class Tenant extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['name', 'photo', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking'];
+    protected $fillable = ['name', 'photo', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking', 'start_date', 'end_date'];
 
     public function unit()
     {

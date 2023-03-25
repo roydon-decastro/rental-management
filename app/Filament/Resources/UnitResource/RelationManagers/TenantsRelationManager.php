@@ -35,8 +35,9 @@ class TenantsRelationManager extends RelationManager
                 // Tables\Columns\TextColumn::make('first_name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('cellphone'),
-                Tables\Columns\TextColumn::make('plate'),
-                Tables\Columns\IconColumn::make('is_current')->boolean(),
+                // Tables\Columns\TextColumn::make('plate'),
+                Tables\Columns\IconColumn::make('is_current')->boolean()->label('Current'),
+                Tables\Columns\IconColumn::make('is_primary')->boolean()->label('Primary'),
                 // Toggle::make('is_current'),
             ])
             ->filters([

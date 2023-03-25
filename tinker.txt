@@ -1,0 +1,17 @@
+$units = DB::table('units')
+            ->orderBy('units.name')
+            ->count();
+
+$units = DB::table('units')
+            ->orderBy('units.name')
+            ->get();
+
+
+$units = DB::table('units')
+  			->join('readings', 'units.id', '=', 'readings.unit_id')
+  			->whereMonth('readings.created_at', Carbon\Carbon::now()->subMonth())
+            ->get();
+
+$prev_readings = DB::table('readings')
+  			->whereMonth('readings.created_at', Carbon\Carbon::now()->subMonth())
+            ->get();

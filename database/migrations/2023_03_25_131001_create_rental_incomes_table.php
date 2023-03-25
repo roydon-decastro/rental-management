@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('rental_incomes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bill_id')->constrained();
-            $table->double('pay_amount', 6, 2);
-            $table->date('pay_date')->nullable();
-            $table->string('name')->nullable();
-            $table->string('or_number')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('rental_incomes');
     }
 };

@@ -36,6 +36,8 @@ class TenantResource extends Resource
 
     protected static ?string $navigationGroup = 'Property Management';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -46,7 +48,7 @@ class TenantResource extends Resource
                             ->relationship('unit', 'name')->required(),
                         TextInput::make('name')->required()->maxLength(255),
                         // TextInput::make('first_name')->required()->maxLength(255),
-                        TextInput::make('email')->required()->maxLength(255)->unique(ignoreRecord:true),
+                        TextInput::make('email')->required()->maxLength(255)->unique(ignoreRecord: true),
                         TextInput::make('id_type')->required()->maxLength(255),
                         TextInput::make('id_number')->required()->maxLength(255),
                         TextInput::make('cellphone')->required()->maxLength(255),
@@ -55,7 +57,7 @@ class TenantResource extends Resource
                                 'm' => 'Male',
                                 'f' => 'Female',
                             ])->required(),
-                        DatePicker::make('dob'),
+                        DatePicker::make('dob')->required(),
                         TextInput::make('plate')->label('Motorcycle Plate Number')->maxLength(255),
                         Toggle::make('is_primary')
                             ->onIcon('heroicon-o-check')
@@ -69,7 +71,9 @@ class TenantResource extends Resource
                             ->onIcon('heroicon-o-check')
                             ->offIcon('heroicon-o-x')
                             ->onColor('success'),
-                        FileUpload::make('photo')
+                        FileUpload::make('photo'),
+                        DatePicker::make('start_date'),
+                        DatePicker::make('end_date'),
                         // SpatieMediaLibraryFileUpload::make('photo')->collection('tenants'),
 
                     ])->columns(3)
@@ -89,9 +93,9 @@ class TenantResource extends Resource
                 //     }),
                 TextColumn::make('name'),
                 TextColumn::make('created_at')->sortable()->hidden(),
-                TextColumn::make('cellphone'),
+                // TextColumn::make('cellphone'),
                 // TextColumn::make('plate'),
-                TextColumn::make('email'),
+                // TextColumn::make('email'),
                 TextColumn::make('sex')->enum([
                     'm' => 'Male',
                     'f' => 'Female',
@@ -99,7 +103,10 @@ class TenantResource extends Resource
                 IconColumn::make('is_primary')->boolean()->label('Primary'),
                 IconColumn::make('is_current')->boolean()->label('Current'),
                 IconColumn::make('has_parking')->boolean()->label('Parking'),
-                ImageColumn::make('photo')
+                TextColumn::make('start_date')->label('Start Date'),
+                TextColumn::make('end_date')->label('End Date'),
+                ImageColumn::make('photo'),
+
 
                 // SpatieMediaLibraryImageColumn::make('photo')->collection('tenants'),
             ])
@@ -126,6 +133,13 @@ class TenantResource extends Resource
         return [
             //
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_current', '=', 1)
+            ->where('is_primary', '=', 1)
+            ->count();
     }
 
     public static function getPages(): array

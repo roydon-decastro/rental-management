@@ -3,14 +3,15 @@
 namespace App\Filament\Resources;
 
 use Closure;
+use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\Bill;
 use App\Models\Rate;
 use App\Models\Unit;
 use Filament\Tables;
 use Pages\ListRates;
-use App\Models\Tenant;
 
+use App\Models\Tenant;
 use App\Models\Payment;
 use App\Models\Reading;
 use Illuminate\Support\Str;
@@ -54,7 +55,7 @@ class BillResource extends Resource
                     ->schema([
                         Select::make('unit_id')
                             ->label('Unit')
-                            ->options(Unit::all()->pluck('name', 'id')->toArray())
+                            ->options(Unit::all()->sortBy('name')->pluck('name', 'id')->toArray())
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(fn (callable $set) => $set('reading_id', null))
@@ -305,7 +306,13 @@ class BillResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('unit_name')->relationship('unit', 'name')
+                SelectFilter::make('unit_name')->relationship('unit', 'name'),
+                Filter::make('is_paid')
+                    ->label('Not yet paid')
+                    ->query(fn (Builder $query): Builder => $query->where('is_paid', null)),
+                // Filter::make('is_paid')
+                //     ->label('Not yet paid')
+                //     ->query(fn (Builder $query): Builder => $query->where('is_paid', false))
             ])
             ->actions([
                 // Tables\Actions\ViewAction::make(),
@@ -326,6 +333,11 @@ class BillResource extends Resource
                     })
                     ->requiresConfirmation()
                     ->modalButton('Add Payment')
+                    // ->disabled(function (Bill $record): bool {
+                    //     if ($record->is_paid == 1) {
+                    //         return true;
+                    //     }
+                    // })
 
 
 
@@ -337,8 +349,7 @@ class BillResource extends Resource
                             ->default(function (Bill $record): string {
                                 return $record['unit_name'];
                             })
-                            ->disabled()
-                            ,
+                            ->disabled(),
                         Forms\Components\TextInput::make('pay_amount')
                             ->label('Amount Paid')
                             ->default(function (Bill $record): string {
@@ -352,11 +363,12 @@ class BillResource extends Resource
                                 'Cash' => 'Cash',
                                 'BPI' => 'BPI',
                                 'BDO' => 'BDO',
+                                'Deposit Deduction' => 'Deposit Deduction',
                             ])
                             ->default('Gcash')
                             ->required(),
 
-                    // ])->columns(2),
+                        // ])->columns(2),
                     ])
 
 
@@ -365,16 +377,18 @@ class BillResource extends Resource
                     ->color('success')
                     ->icon('heroicon-o-cash'),
                 //     ->route('rate'),
+
                 Tables\Actions\Action::make('print')
                     ->url(fn (Bill $record): string => route('print', $record))
                     ->openUrlInNewTab()
-                    // ->action(function (Bill $record): void {
-                    //     $this->dispatchBrowserEvent('print', [
-                    //         'post' => $record->getKey(),
-                    //     ]);
-                    // })
                     ->icon('heroicon-o-printer')
                     ->label('PDF'),
+
+                // ->action(function (Bill $record): void {
+                //     $this->dispatchBrowserEvent('print', [
+                //         'post' => $record->getKey(),
+                //     ]);
+                // })
                 // Tables\Actions\DeleteAction::make(),
                 // Tables\Actions\EditAction::make(),
             ])
@@ -418,6 +432,12 @@ class BillResource extends Resource
         return [
             //
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereMonth('bills.created_at', Carbon::now()->month)
+            ->count();
     }
 
 

@@ -26,7 +26,9 @@ class VatResource extends Resource
 
     protected static ?string $navigationGroup = 'Property Management';
 
+    protected static ?string $navigationLabel = 'VAT';
 
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {

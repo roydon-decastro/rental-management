@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Carbon\Carbon;
 use Filament\Forms;
 use App\Models\Unit;
 use Filament\Tables;
@@ -11,15 +12,15 @@ use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
 
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\ReadingResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BillResource\Pages as BillPages;
 use App\Filament\Resources\ReadingResource\RelationManagers;
 
@@ -31,6 +32,8 @@ class ReadingResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
     protected static ?string $navigationGroup = 'Transactions';
+
+
 
     public static function form(Form $form): Form
     {
@@ -57,7 +60,7 @@ class ReadingResource extends Resource
             ->defaultSort('read_date', 'desc')
             ->filters([
                 SelectFilter::make('unit_name')->relationship('unit', 'name'),
-                SelectFilter::make('created_at')
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -73,6 +76,12 @@ class ReadingResource extends Resource
         return [
             //
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereMonth('readings.created_at', Carbon::now()->month)
+            ->count();
     }
 
     public static function getPages(): array

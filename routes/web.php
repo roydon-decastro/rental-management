@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillPerMonthReport;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ReceiptController;
@@ -28,9 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/print/{bill}', PrintController::class)->name('print');
+    Route::get('/receipt/{payment}', ReceiptController::class)->name('receipt');
+    Route::get('/billpermonth/{month}', BillPerMonthReport::class)->name('billpermonth');
 });
 
-Route::get('/print{bill}', PrintController::class)->name('print');
-Route::get('/receipt/{payment}', ReceiptController::class)->name('receipt');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

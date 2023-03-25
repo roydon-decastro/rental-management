@@ -126,23 +126,46 @@
         <tr style="vertical-align: top;">
             <td style="font-weight: bold" width="420">TOTAL AMOUNT DUE</td>
             {{-- <td width="1">:</td> --}}
-            <td style="font-weight: bold; color:royalblue">PHP {{ $bill->total_amount_due }}</td>
+            <td style="font-weight: bold; color:darkblue">PHP {{ $bill->total_amount_due }}</td>
         </tr>
         <tr>
             <td style="font-weight: bold">PAYMENT DUE DATE</td>
             {{-- <td>:</td> --}}
             {{-- <td style="font-weight: bold;">{{  date('j F, Y', strtotime($bill->prev_read_date)) }}</td> --}}
-            <td style="font-weight: bold; font-size:11; color:royalblue">{{ now()->endOfMonth()->format('j F, Y');  }}</td>
+            {{-- <td style="font-weight: bold; font-size:11; color:royalblue">{{ now()->endOfMonth()->format('j F, Y');  }}</td> --}}
+            <td style="font-weight: bold; font-size:11; color:darkblue">{{ now()->endOfMonth()->format('j F, Y');  }}</td>
+
         </tr>
     </table>
     <hr style="border: 1px dotted">
+    <h4 style="margin: -2px;">You may pay at the following accounts:</h4>
+    <table width="100%" border="0" style="margin:20px 0">
+        <tr style="vertical-align: top;">
+            <td width="120">Gcash</td>
+            {{-- <td width="1">:</td> --}}
+            <td>09985518556</td>
+            <td>Josefina Arlene Antonio</td>
+        </tr>
+        <tr style="vertical-align: top;">
+            <td width="120">BDO - SA</td>
+            <td>010150153112 </td>
+            <td>Josefina Arlene Antonio</td>
+        </tr>
+        <tr>
+            <td>BPI</td>
+            <td>00001449173321</td>
+            <td>ARRC BPI</td>
+        </tr>
+    </table>
+    <hr style="border: 1px dotted">
+
     <p style=" font-size:10; color:red">Please pay on or before due date to avoid 1% daily interest penalty charge for unpaid bills.</p>
     <p style=" font-size:10; color:gray">Water Tank cleaning schedule: Every 1st Saturday of the month.</p>
     <p style=" font-size:10; color:gray">Reconnection fee of PHP250.00 will be charged in case of disconnection.</p>
     <p style=" font-size:10; color:gray">Please examine your bill carefully. If no complaint is made within 15 days of receipt, this bill is considered true and correct.</p>
     <p style=" font-size:10; color:gray">For Inquiries and concerns, please call 09985518556 / 09192907360 or email arrc.residences@gmail.com</p>
     <br><br>
-    <p style="font-weight:bold; font-size:14; color: green; text-align:center">Every drop counts. Conserve water. Save mother earth.</p>
+    <p style="font-weight:bold; font-size:14; color: darkgreen; text-align:center">Every drop counts. Conserve water. Save mother earth.</p>
 </body>
 
 </html>

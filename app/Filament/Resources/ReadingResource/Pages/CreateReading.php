@@ -10,9 +10,12 @@ class CreateReading extends CreateRecord
 {
     protected static string $resource = ReadingResource::class;
 
+    // protected static string $view = 'filament.pages.readings';
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
     }
+
 
 }

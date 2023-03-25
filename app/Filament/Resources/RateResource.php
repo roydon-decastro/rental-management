@@ -27,6 +27,8 @@ class RateResource extends Resource
 
     protected static ?string $navigationGroup = 'Property Management';
 
+    protected static ?int $navigationSort = 4;
+
     public static function form(Form $form): Form
     {
         return $form

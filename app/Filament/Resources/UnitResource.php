@@ -28,6 +28,8 @@ class UnitResource extends Resource
 
     protected static ?string $navigationGroup = 'Property Management';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -121,6 +123,11 @@ class UnitResource extends Resource
             TenantsRelationManager::class,
             ReadingsRelationManager::class,
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     public static function getPages(): array

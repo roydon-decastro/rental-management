@@ -23,6 +23,12 @@ class Tenant extends Model implements HasMedia
         return $this->hasMany(Bill::class);
     }
 
+    public function rents()
+    {
+        return $this->hasMany(RentalIncome::class);
+    }
+
+
     public function contracts()
     {
         return $this->hasMany(Contract::class);

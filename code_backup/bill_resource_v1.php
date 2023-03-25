@@ -37,7 +37,7 @@ class BillResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
 
-    protected static ?string $navigationGroup = 'Transactions';
+    protected static ?string $navigationGroup = 'Water Transactions';
 
     public static function form(Form $form): Form
     {

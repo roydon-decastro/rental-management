@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Bill;
 use App\Models\Unit;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,10 +20,10 @@ class LatestBills extends BaseWidget
     protected function getTableQuery(): Builder
     {
         return Bill::query()
-                    // ->where('is_paid', '=', null)
-                    ->whereMonth('bills.created_at', Carbon::now()->month)
-                    ->orderBy('bills.unit_name');
-                    // ->oldest();
+            // ->where('is_paid', '=', null)
+            ->whereMonth('bills.created_at', Carbon::now()->month)
+            ->orderBy('bills.unit_name');
+        // ->oldest();
 
 
         // return Unit::query()->latest();
@@ -38,6 +39,16 @@ class LatestBills extends BaseWidget
             TextColumn::make('created_at')
                 ->dateTime('F d, Y')
                 ->label('Date'),
+        ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            Filter::make('Paid')
+            ->query(fn (Builder $query): Builder => $query->where('is_paid', true)),
+            Filter::make('Not yet Paid')
+            ->query(fn (Builder $query): Builder => $query->where('is_paid', '=', null)),
         ];
     }
 }

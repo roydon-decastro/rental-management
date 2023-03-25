@@ -35,4 +35,9 @@ class Unit extends Model
     {
         return $this->hasMany(Bill::class);
     }
+
+    public function rental()
+    {
+        return $this->hasMany(RentalIncome::class);
+    }
 }

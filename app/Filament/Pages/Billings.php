@@ -23,6 +23,8 @@ class Billings extends Page
     public $name = '';
     public int $tenant_count;
 
+    protected static ?string $navigationGroup = 'Water Transactions';
+
     protected static ?string $navigationIcon = 'heroicon-o-plus-circle';
 
     protected static ?string $title = 'Add New Readings';
@@ -153,5 +155,5 @@ class Billings extends Page
     // }
 
 
-    protected static ?string $navigationGroup = 'Transactions';
+
 }

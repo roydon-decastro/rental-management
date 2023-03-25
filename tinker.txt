@@ -15,3 +15,20 @@ $units = DB::table('units')
 $prev_readings = DB::table('readings')
   			->whereMonth('readings.created_at', Carbon\Carbon::now()->subMonth())
             ->get();
+
+$units = DB::table('units')
+  			->leftJoin('tenants', 'units.id', '=', 'tenants.unit_id')
+  			->select('units.id', 'units.name', 'units.rent', 'tenants.name as tenantName', 'tenants.start_date', 'tenants.end_date')
+            ->orderBy('units.id')
+            ->get();
+
+
+$units = DB::table('units')
+  			->leftJoin('tenants', 'units.id', '=', 'tenants.unit_id')
+  			->select('units.id as unitID', 'units.name', 'units.rent', 'tenants.id as tenantID',
+					'tenants.name as tenantName', 'tenants.start_date as tenantStart',
+					 'tenants.end_date as tenantEnd')
+            ->orderBy('units.name')
+            ->get();
+
+

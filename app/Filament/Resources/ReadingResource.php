@@ -31,7 +31,7 @@ class ReadingResource extends Resource
     // protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
     protected static ?string $navigationIcon = 'heroicon-o-chart-pie';
 
-    protected static ?string $navigationGroup = 'Transactions';
+    protected static ?string $navigationGroup = 'Water Transactions';
 
 
 

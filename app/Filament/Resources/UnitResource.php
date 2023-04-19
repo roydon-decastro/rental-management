@@ -85,6 +85,7 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('meralco')->sortable()->searchable(),
                 TextColumn::make('rent')->money('php', true),

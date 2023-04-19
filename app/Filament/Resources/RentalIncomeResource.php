@@ -26,7 +26,7 @@ class RentalIncomeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $navigationGroup = 'Rent';
+    protected static ?string $navigationGroup = 'Rental Income';
 
     public static function form(Form $form): Form
     {
@@ -63,6 +63,7 @@ class RentalIncomeResource extends Resource
                 TextColumn::make('unit.name')->sortable(),
                 TextColumn::make('tenant.name')->sortable(),
                 TextColumn::make('income'),
+                TextColumn::make('parking_fee'),
                 TextColumn::make('pay_date'),
             ])
             ->filters([

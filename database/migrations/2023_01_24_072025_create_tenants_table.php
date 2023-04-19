@@ -16,6 +16,10 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->integer('rent')->nullable();
+            $table->integer('parking_fee')->nullable();
             $table->string('photo')->nullable();
             $table->string('id_type')->nullable();
             $table->string('id_number')->nullable();

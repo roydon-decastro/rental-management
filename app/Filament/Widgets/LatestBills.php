@@ -15,7 +15,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestBills extends BaseWidget
 {
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 5;
 
     protected function getTableQuery(): Builder
     {

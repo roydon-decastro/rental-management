@@ -9,7 +9,12 @@ class Contract extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['unit_id', 'tenant_id', 'start_date', 'end_date','period', 'notes'];
+    protected $fillable = ['unit_id', 'tenant_id', 'start_date', 'end_date','period', 'notes', 'is_active'];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
 
     public function tenant()
     {

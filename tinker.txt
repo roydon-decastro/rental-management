@@ -32,3 +32,89 @@ $units = DB::table('units')
             ->get();
 
 
+$units = DB::table('units')
+            ->orderBy('units.name')
+            ->count();
+
+$units = DB::table('units')
+            ->orderBy('units.name')
+            ->get();
+
+
+$units = DB::table('units')
+  			->join('readings', 'units.id', '=', 'readings.unit_id')
+  			->whereMonth('readings.created_at', Carbon\Carbon::now()->subMonth())
+            ->get();
+
+$prev_readings = DB::table('readings')
+  			->whereMonth('readings.created_at', Carbon\Carbon::now()->subMonth())
+            ->get();
+
+$tenant = DB::table('tenants')
+  			->where('id','=',6)
+  			->get();
+
+$cubic_meter_per_month = DB::table('bills')
+  			->whereMonth('bills.created_at', Carbon\Carbon::now()->month)
+  			->sum('consumption');
+
+$bills = DB::table('bills')
+  			->whereMonth('bills.created_at', 3)
+            ->get();
+
+
+
+$tenants = DB::table('tenants')
+  			->select('tenants.id as tenantID', 'tenants.unit_id', 'tenants.name')
+  			->get();
+
+
+$total_monthly_rent = DB::table('rental_incomes')->sum('income');
+
+$total_parking = DB::table('tenants')
+  			->where('is_current', '=', true)
+  			->where('has_parking', '=', true)
+  			->count();
+
+$units = DB::table('units')
+  			->leftJoin('tenants', 'units.id', '=', 'tenants.unit_id')
+  			->where('tenants.end_date', '=', null)
+  			->select('units.id as unitID', 'units.name', 'units.rent', 'tenants.id as tenantID',
+					'tenants.name as tenantName', 'tenants.is_current as Occupied', 'tenants.start_date as tenantStart',
+					 'tenants.end_date as tenantEnd')
+
+            ->orderBy('units.name')
+            ->get();
+
+$originalUnits = DB::table('units')
+            ->leftJoin('tenants', 'units.id', '=', 'tenants.unit_id')
+            ->select(
+                'units.id as unitID',
+                'units.name',
+                'units.rent',
+                'tenants.id as tenantID',
+                'tenants.name as tenantName',
+                'tenants.is_current as occupied',
+  				'tenants.rent as tenantRent',
+  				'tenants.parking_fee as tenantParkingFee',
+                'tenants.has_parking as hasParking',
+                'tenants.start_date as tenantStart',
+                'tenants.end_date as tenantEnd'
+            )
+            ->orderBy('units.name')
+            ->get();
+
+
+
+$bills = DB::table('bills')
+  ->where('id', '=', 20)
+  ->get();
+
+$expense_categories = DB::table('expense_categories')
+  				->select('id', 'name')
+  				->get();
+$expensesByCategory = DB::table('expenses')
+  	->leftJoin('expense_categories', 'expenses.expense_category_id', '=', 'expense_categories.id')
+    ->select('expense_category_id','expense_categories.name', DB::raw('SUM(amount) as total_amount'))
+    ->groupBy('expense_category_id')
+    ->get();

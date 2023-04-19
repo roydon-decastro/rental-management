@@ -11,7 +11,7 @@ class Tenant extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['name', 'photo', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking', 'start_date', 'end_date'];
+    protected $fillable = ['name', 'photo', 'email', 'id_type', 'id_number', 'cellphone', 'plate', 'dob', 'sex', 'unit_id', 'is_current', 'is_primary', 'has_parking', 'start_date', 'end_date', 'rent', 'parking_fee'];
 
     public function unit()
     {
@@ -32,6 +32,11 @@ class Tenant extends Model implements HasMedia
     public function contracts()
     {
         return $this->hasMany(Contract::class);
+    }
+
+    public function readings()
+    {
+        return $this->hasMany(Reading::class);
     }
 
     protected $casts = [

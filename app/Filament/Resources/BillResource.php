@@ -44,7 +44,7 @@ class BillResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-
+    protected static ?string $navigationLabel = 'Water Bills';
     protected static ?string $navigationGroup = 'Water Transactions';
 
     public static function form(Form $form): Form
@@ -72,7 +72,7 @@ class BillResource extends Resource
                         Select::make('reading_id')
                             ->label('Current Read Date')
                             ->required()
-                            ->options(function (callable $get) {
+                            ->options(function (callable $get, $set) {
                                 $unit = Unit::find($get('unit_id'));
                                 if (!$unit) {
                                     return Reading::all()->pluck('read_date', 'id');
@@ -82,10 +82,17 @@ class BillResource extends Resource
                             })
                             ->reactive()
                             ->afterStateUpdated(function (Closure $set, $get, $state) {
-                                $unit = Unit::find($get('unit_id'));
-                                $tenant = Unit::find($get('unit_id'))->tenants()->where('is_current', '=', true)
+                                $chosen_unit_id = $get('unit_id');
+                                // $unit = Unit::find($get('unit_id'));
+                                $unit = Unit::find($chosen_unit_id);
+                                // $tenant = Unit::find($get('unit_id'))->tenants()->where('is_current', '=', true)
+                                $tenant = Unit::find($chosen_unit_id)->tenants()->where('is_current', '=', true)
                                     ->where('is_primary', '=', true)->first();
                                 $reading = Reading::find($get('reading_id'));
+                                $readingAll = Reading::all()->where('unit_id', '=', $chosen_unit_id)->sortByDesc('created_at')->pluck('read_date', 'id')->toArray();
+                                $readingAllArray = array_combine(range(0, count($readingAll)-1), array_keys($readingAll));;
+                                // dd($readingAll);
+                                // dd($readingAllArray[1]);
 
                                 $new_value = $reading['reading'];
                                 $set('curr_reading', $new_value);
@@ -93,6 +100,8 @@ class BillResource extends Resource
                                 $set('tenant_name', $tenant->name);
                                 $set('unit_name', $unit->name);
                                 $set('curr_read_date', $reading->read_date);
+                                // $set('prev_read_id', $readingAllArray[1]);
+                                // $set('prev_read_id', 15);
                             }),
 
                         Select::make('prev_read_id')
@@ -115,6 +124,8 @@ class BillResource extends Resource
                                 $set('consumption', $consumption);
                                 // error $set('curr_balance', $get('consumption') * $get('rate'));
                                 $rates = Rate::all();
+                                // $rates = Rate::all();
+
                                 // dd($rates[3]['rate']);
                                 // dd($rates);
                                 // fyi tier 1
@@ -289,13 +300,22 @@ class BillResource extends Resource
             ]);
     }
 
+    // protected function getTableQuery(): Builder
+    // {
+    //     $bills = DB::table('bills')
+  	// 		->whereMonth('bills.created_at', 3)
+    //         ->get();
+    //     return $bills;
+    //     // return Bill::query();
+    // }
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('unit_name')->sortable()->label('Unit'),
                 TextColumn::make('tenant_name')->sortable()->label('Name'),
-                TextColumn::make('prev_read_date')->label('From Date'),
+                TextColumn::make('prev_read_date')->label('From Date')->sortable(),
                 TextColumn::make('curr_read_date')->label('To Date')->sortable(),
                 TextColumn::make('curr_reading')->label('Curr'),
                 TextColumn::make('prev_reading')->label('Prev'),
@@ -304,7 +324,7 @@ class BillResource extends Resource
                 IconColumn::make('is_paid')->boolean()->label('Paid'),
                 // TextColumn::make('total_amount_due'),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('prev_read_date', 'desc')
             ->filters([
                 SelectFilter::make('unit_name')->relationship('unit', 'name'),
                 Filter::make('is_paid')
@@ -326,6 +346,7 @@ class BillResource extends Resource
                         $payment->bill_id = $record->id;
                         $payment->pay_amount = $data['pay_amount'];
                         $payment->pay_date = $data['pay_date'];
+                        $payment->created_at = $data['pay_date'];
                         $payment->pay_method = $data['pay_method'];
                         $payment->save();
                         $record->is_paid = 1;
@@ -333,11 +354,13 @@ class BillResource extends Resource
                     })
                     ->requiresConfirmation()
                     ->modalButton('Add Payment')
-                    // ->disabled(function (Bill $record): bool {
-                    //     if ($record->is_paid == 1) {
-                    //         return true;
-                    //     }
-                    // })
+                    ->disabled(function (Bill $record): bool {
+                        if ($record->is_paid == true) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
 
 
 

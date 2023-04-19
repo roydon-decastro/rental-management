@@ -15,6 +15,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,7 +29,7 @@ class ContractResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $navigationGroup = 'Property Management';
+    protected static ?string $navigationGroup = 'Tenant Management';
 
     protected static ?int $navigationSort = 5;
 
@@ -56,6 +57,8 @@ class ContractResource extends Resource
                             })
                             ->reactive(),
                         // ->afterStateUpdated(fn (callable $set) => $set('tenant_id', null)),
+                        TextInput::make('rent')->numeric()->nullable(),
+                        TextInput::make('parking_fee')->numeric()->nullable(),
                         DatePicker::make('start_date'),
                         DatePicker::make('end_date'),
                         Select::make('period')
@@ -80,7 +83,10 @@ class ContractResource extends Resource
                 TextColumn::make('tenant.name'),
                 TextColumn::make('start_date'),
                 TextColumn::make('end_date'),
+                TextColumn::make('rent'),
+                TextColumn::make('parking_fee'),
                 TextColumn::make('period'),
+                IconColumn::make('is_active')->label('Active')->boolean(),
                 IconColumn::make('tenant.is_current')->label('Current')->boolean(),
             ])
             ->defaultSort('created_at', 'desc')

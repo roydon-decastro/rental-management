@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Property extends Model
+class ExpenseCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'email', 'phone'];
+    protected $fillable = [
+        'name',
+        'short_name',
+        'description',
 
-    public function units()
-    {
-        return $this->hasMany(Unit::class);
-    }
+    ];
 
     public function expenses()
     {

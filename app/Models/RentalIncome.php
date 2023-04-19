@@ -9,7 +9,7 @@ class RentalIncome extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['unit_id', 'tenant_id', 'rent', 'income', 'pay_date'];
+    protected $fillable = ['unit_id', 'tenant_id', 'rent', 'income', 'pay_date', 'parking_fee'];
 
     public function unit()
     {

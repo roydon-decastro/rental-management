@@ -11,12 +11,12 @@ use Filament\Widgets\BarChartWidget;
 
 class BillsChart extends BarChartWidget
 {
-    protected static ?string $heading = 'Monthly Bill Totals';
+    protected static ?string $heading = 'Monthly Water Bill Totals';
 
-    protected static ?int $sort = 0;
+    protected static ?int $sort = 2;
 
     // protected int | string | array $columnSpan = 4;
-    protected int | string | array $columnSpan = 'full';
+    // protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array
     {

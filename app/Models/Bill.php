@@ -27,6 +27,7 @@ class Bill extends Model
         'service_charge_rate',
         'vat',
         'total_amount_due',
+        'created_at'
     ];
 
     protected $casts = [

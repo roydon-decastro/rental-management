@@ -34,7 +34,7 @@ class TenantResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationGroup = 'Property Management';
+    protected static ?string $navigationGroup = 'Tenant Management';
 
     protected static ?int $navigationSort = 3;
 
@@ -71,12 +71,14 @@ class TenantResource extends Resource
                             ->onIcon('heroicon-o-check')
                             ->offIcon('heroicon-o-x')
                             ->onColor('success'),
-                        FileUpload::make('photo'),
                         DatePicker::make('start_date'),
                         DatePicker::make('end_date'),
+                        TextInput::make('rent'),
+                        TextInput::make('parking_fee'),
+                        FileUpload::make('photo'),
                         // SpatieMediaLibraryFileUpload::make('photo')->collection('tenants'),
 
-                    ])->columns(3)
+                    ])->columns(4)
             ]);
     }
 
@@ -92,14 +94,15 @@ class TenantResource extends Resource
                 //         return $record->first_name . ' ' . $record->l_name;
                 //     }),
                 TextColumn::make('name'),
+                TextColumn::make('id')->label('Tenant ID'),
                 TextColumn::make('created_at')->sortable()->hidden(),
-                // TextColumn::make('cellphone'),
-                // TextColumn::make('plate'),
+                TextColumn::make('rent'),
+                TextColumn::make('parking_fee'),
                 // TextColumn::make('email'),
-                TextColumn::make('sex')->enum([
-                    'm' => 'Male',
-                    'f' => 'Female',
-                ]),
+                // TextColumn::make('sex')->enum([
+                //     'm' => 'Male',
+                //     'f' => 'Female',
+                // ]),
                 IconColumn::make('is_primary')->boolean()->label('Primary'),
                 IconColumn::make('is_current')->boolean()->label('Current'),
                 IconColumn::make('has_parking')->boolean()->label('Parking'),

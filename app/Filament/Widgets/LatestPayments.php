@@ -12,7 +12,7 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestPayments extends BaseWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 6;
     protected function getTableQuery(): Builder
     {
         return Payment::query()

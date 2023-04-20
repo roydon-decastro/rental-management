@@ -14,6 +14,7 @@ use Pages\ListRates;
 use App\Models\Tenant;
 use App\Models\Payment;
 use App\Models\Reading;
+use App\Models\OverPayment;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use App\Models\ServiceCharge;
@@ -340,27 +341,43 @@ class BillResource extends Resource
                 // ->url(fn () => route('print', $this->record))
                 Tables\Actions\Action::make('Add Payment')
                     ->action(function (Bill $record, array $data): void {
-                        // dd($record);
+                        // dd($record->unit_id);
                         // dd($data);
+                        $tenant = Unit::find($record->unit_id)->tenants()->where('is_current', '=', true)
+                                    ->where('is_primary', '=', true)->first();
+                        // dd($tenant);
                         $payment = new Payment;
+                        $paid_amount = $data['pay_amount'];
+                        $amount_due = $record->total_amount_due;
                         $payment->bill_id = $record->id;
-                        $payment->pay_amount = $data['pay_amount'];
+                        $payment->pay_amount = $paid_amount;
                         $payment->pay_date = $data['pay_date'];
                         $payment->created_at = $data['pay_date'];
                         $payment->pay_method = $data['pay_method'];
                         $payment->save();
                         $record->is_paid = 1;
                         $record->save();
+                        if ($paid_amount > $amount_due) {
+                            $overpayment = new OverPayment;
+                            $overpaid_amount = $paid_amount - $amount_due;
+                            $overpayment->unit_id = $record->unit_id;
+                            $overpayment->tenant_id = $tenant->id;
+                            $overpayment->overpayment_amount = $overpaid_amount;
+                            $overpayment->save();
+                            // dd('Sobra ang bayad ng ' . $overpaid_amount);
+                        }
+
+
                     })
                     ->requiresConfirmation()
                     ->modalButton('Add Payment')
-                    ->disabled(function (Bill $record): bool {
-                        if ($record->is_paid == true) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    })
+                    // ->disabled(function (Bill $record): bool {
+                    //     if ($record->is_paid == true) {
+                    //         return true;
+                    //     } else {
+                    //         return false;
+                    //     }
+                    // })
 
 
 

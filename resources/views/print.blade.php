@@ -53,7 +53,7 @@
         <tr>
             <td>SoA For Month Of</td>
             <td>:</td>
-            <td>{{  date('F', strtotime($bill->curr_read_date)) }}</td>
+            <td>{{ date('F', strtotime($bill->curr_read_date)) }}</td>
         </tr>
         <tr>
             <td>Rate Class</td>
@@ -93,53 +93,60 @@
         <tr style="vertical-align: top;">
             <td width="420">Billing Period From</td>
             {{-- <td width="1">:</td> --}}
-            <td>{{ $bill->prev_read_date }}</td>
+            <td style=" color:lightslategrey">{{ $bill->prev_read_date }}</td>
         </tr>
         <tr style="vertical-align: top;">
             <td width="420">Billing Period To</td>
             {{-- <td width="1">:</td> --}}
-            <td>{{ $bill->curr_read_date }}</td>
+            <td style=" color:lightslategrey">{{ $bill->curr_read_date }}</td>
         </tr>
         <tr>
             <td>Current Charges</td>
             {{-- <td>:</td> --}}
-            <td>{{ $bill->curr_balance }}</td>
+            <td style=" color:lightslategrey">{{ $bill->curr_balance }}</td>
         </tr>
         <tr>
             <td>Previous Balance</td>
             {{-- <td>:</td> --}}
-            <td>{{ $bill->prev_balance }}</td>
+            <td style=" color:lightslategrey">{{ $bill->prev_balance }}</td>
         </tr>
         <tr>
             <td>Maintenance Service Charge</td>
             {{-- <td>:</td> --}}
-            <td>{{ $bill->service_charge }}</td>
+            <td style=" color:lightslategrey">{{ $bill->service_charge }}</td>
         </tr>
+        <tr>
+            <td>Environmental Charge</td>
+            {{-- <td>:</td> --}}
+            <td style=" color:lightslategrey">{{ $bill->environmental_fee_charge }}</td>
+        </tr>
+
         <tr>
             <td>VAT</td>
             {{-- <td>:</td> --}}
-            <td>{{ $bill->vat }}</td>
+            <td style=" color:lightslategrey">{{ $bill->vat }}</td>
         </tr>
     </table>
     <hr style="border: 1px dotted">
-    <table width="100%" border="0" style="margin:20px 0">
+    <table width="100%" style="border:0 margin:20px 0">
         <tr style="vertical-align: top;">
-            <td style="font-weight: bold" width="420">TOTAL AMOUNT DUE</td>
+            <td style="font-weight: bold; font-size:20px; color:red " width="420">TOTAL AMOUNT DUE</td>
             {{-- <td width="1">:</td> --}}
-            <td style="font-weight: bold; color:darkblue">PHP {{ $bill->total_amount_due }}</td>
+            <td style="font-weight: bold; font-size:20px; color:red"> PHP {{ $bill->total_amount_due }}</td>
         </tr>
         <tr>
-            <td style="font-weight: bold">PAYMENT DUE DATE</td>
+            <td style="">Payment due date</td>
             {{-- <td>:</td> --}}
             {{-- <td style="font-weight: bold;">{{  date('j F, Y', strtotime($bill->prev_read_date)) }}</td> --}}
             {{-- <td style="font-weight: bold; font-size:11; color:royalblue">{{ now()->endOfMonth()->format('j F, Y');  }}</td> --}}
-            <td style="font-weight: bold; font-size:11; color:darkblue">{{ now()->endOfMonth()->format('j F, Y');  }}</td>
+            <td style="font-size:11; color:gray">16 {{ now('m')->format('F, Y') }}
+            </td>
 
         </tr>
     </table>
     <hr style="border: 1px dotted">
     <h4 style="margin: -2px;">You may pay at the following accounts:</h4>
-    <table width="100%" border="0" style="margin:20px 0">
+    <table width="100%" style="margin:20px 0; border:0">
         <tr style="vertical-align: top;">
             <td width="120">Gcash</td>
             {{-- <td width="1">:</td> --}}
@@ -159,13 +166,20 @@
     </table>
     <hr style="border: 1px dotted">
 
-    <p style=" font-size:10; color:red">Please pay on or before due date to avoid 1% daily interest penalty charge for unpaid bills.</p>
+    <p style=" font-size:10; color:red">Please pay on or before due date to avoid 1% daily interest penalty charge for
+        unpaid bills.</p>
     <p style=" font-size:10; color:gray">Water Tank cleaning schedule: Every 1st Saturday of the month.</p>
-    <p style=" font-size:10; color:gray">Reconnection fee of PHP250.00 will be charged in case of disconnection.</p>
-    <p style=" font-size:10; color:gray">Please examine your bill carefully. If no complaint is made within 15 days of receipt, this bill is considered true and correct.</p>
-    <p style=" font-size:10; color:gray">For Inquiries and concerns, please call 09985518556 / 09192907360 or email arrc.residences@gmail.com</p>
+    <p style=" font-size:10; color:gray">Reconnection fee of PHP250.00 will be charged in case of disconnection.
+    </p>
+    <p style=" font-size:10; color:gray">Please examine your bill carefully. If no complaint is made within 15
+        days of
+        receipt, this bill is considered true and correct.</p>
+    <p style=" font-size:10; color:gray">For Inquiries and concerns, please call 09985518556 / 09192907360 or
+        email
+        arrc.residences@gmail.com</p>
     <br><br>
-    <p style="font-weight:bold; font-size:14; color: darkgreen; text-align:center">Every drop counts. Conserve water. Save mother earth.</p>
+    <p style="font-weight:bold; font-size:14; color: lightskyblue; text-align:center">Every drop counts. Conserve water.
+        Save mother earth.</p>
 </body>
 
 </html>

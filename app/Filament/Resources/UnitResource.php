@@ -87,6 +87,7 @@ class UnitResource extends Resource
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('status')->sortable()->searchable(),
                 TextColumn::make('meralco')->sortable()->searchable(),
                 TextColumn::make('rent')->money('php', true),
                 TextColumn::make('type')->enum([
@@ -95,10 +96,10 @@ class UnitResource extends Resource
                     'c' => 'C',
                     'd' => 'D',
                 ])->sortable(),
-                TextColumn::make('meter_type')->enum([
-                    'lxs' => 'lxs',
-                    'lamco' => 'lamco',
-                ]),
+                // TextColumn::make('meter_type')->enum([
+                //     'lxs' => 'lxs',
+                //     'lamco' => 'lamco',
+                // ]),
                 TextColumn::make('function')->enum([
                     'residential' => 'Residential',
                     'commercial' => 'Commercial',

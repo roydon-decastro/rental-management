@@ -27,12 +27,13 @@ class ViewTenant extends ViewRecord
             Actions\Action::make('Remove Tenant')->button()
                 ->color('danger')
                 ->action(function (): string {
-                    // dd($this->record->id);
+                    // dd($this->record->unit_id);
                     $tenant = DB::table('tenants')
                         ->where('id', '=', $this->record->id)
-                        ->update(array('is_primary' => 0, 'is_current' => 0))
-
-                        ;
+                        ->update(array('is_primary' => 0, 'is_current' => 0));
+                    $unit = DB::table('units')
+                        ->where('id', '=', $this->record->unit_id)
+                        ->update(array('status' => 'available'));
 
                     // dd($data);
                     // $payment = new Payment;
@@ -46,13 +47,11 @@ class ViewTenant extends ViewRecord
 
                     // return redirect()->to('admin/tenants');
                     return Redirect::to('admin/tenants')->getUrlGenerator()->to('admin/tenants');
-
                 })
                 // ->url(fn () => route('/'))
                 // ->url(fn (): string => route("/admin/tenants"))
 
-                ->requiresConfirmation()
-                ,
+                ->requiresConfirmation(),
 
             Actions\EditAction::make(),
 

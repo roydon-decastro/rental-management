@@ -43,6 +43,7 @@ class PaymentResource extends Resource
 
                         return url('admin/bills/' . $record->bill_id);
                     }),
+                TextColumn::make('bill.created_at')->date()->label('Bill Date'),
                 TextColumn::make('pay_date')->sortable(),
                 TextColumn::make('pay_amount')->sortable(),
                 TextColumn::make('pay_method')->sortable(),
@@ -83,7 +84,7 @@ class PaymentResource extends Resource
         return [
             'index' => Pages\ListPayments::route('/'),
             'create' => Pages\CreatePayment::route('/create'),
-            // 'edit' => Pages\EditPayment::route('/{record}/edit'),
+            'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
     }
 }

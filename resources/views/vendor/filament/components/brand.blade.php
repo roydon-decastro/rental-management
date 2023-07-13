@@ -1,9 +1,9 @@
-<div class="flex items-center">
+<div class="flex items-center bg-white pr-4">
     @php
-        $name = "ARRC RM"
+        $name = 'ARRC Rentals';
     @endphp
 
-        <img src="{{ asset('storage/ayala.jpg') }}" alt="Logo" class=" h-8 mr-2">
-        <p class=" text-xl font-bold p-0">{{ $name }}</p>
+    {{-- <img src="{{ asset('storage/renta-logo.png') }}" alt="Logo" class=" h-16"> --}}
+    <p class=" text-xl font-bold p-0 text-rose-800">{{ $name }}</p>
 
 </div>

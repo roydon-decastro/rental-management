@@ -46,13 +46,15 @@ class RentalIncome extends Page
                 'units.rent',
                 'tenants.id as tenantID',
                 'tenants.name as tenantName',
+                'tenants.photo as tenantPhoto',
                 'tenants.is_current as occupied',
                 'tenants.has_parking as hasParking',
                 'tenants.rent as tenantRent',
-  				'tenants.parking_fee as tenantParkingFee',
+                'tenants.parking_fee as tenantParkingFee',
                 'tenants.start_date as tenantStart',
                 'tenants.end_date as tenantEnd'
             )
+            ->where('tenants.is_current', '=', true)
             ->orderBy('units.name')
             ->get();
 
@@ -131,7 +133,7 @@ class RentalIncome extends Page
                 'tenants.is_current as occupied',
                 'tenants.has_parking as hasParking',
                 'tenants.rent as tenantRent',
-  				'tenants.parking_fee as tenantParkingFee',
+                'tenants.parking_fee as tenantParkingFee',
                 'tenants.start_date as tenantStart',
                 'tenants.end_date as tenantEnd'
             )
@@ -175,20 +177,20 @@ class RentalIncome extends Page
         // $unitsTenantRental = [];
 
         // foreach ($rentalIncomeArray as $element) {
-            //  print_r($element);
-            // $unitId = $element['unit_id'];
+        //  print_r($element);
+        // $unitId = $element['unit_id'];
 
-            // find the corresponding element in the tenant array
-            // $tenantElement = null;
-            // foreach ($tenantsArray as $tenant) {
-            //     if ($tenant->unit_id == $unitId) {
-            //         $tenantElement = $tenant;
-            //         break;
-            //     }
-            // }
+        // find the corresponding element in the tenant array
+        // $tenantElement = null;
+        // foreach ($tenantsArray as $tenant) {
+        //     if ($tenant->unit_id == $unitId) {
+        //         $tenantElement = $tenant;
+        //         break;
+        //     }
+        // }
 
-            // create a new element with the combined data
-            // dd(gettype($tenantElement));
+        // create a new element with the combined data
+        // dd(gettype($tenantElement));
         //     $newElement = array_merge($element, json_decode(json_encode($tenantElement), true));
         //     $unitsTenantRental[] = $newElement;
         // }
@@ -201,7 +203,7 @@ class RentalIncome extends Page
             // dd($indRental);
             // foreach ($indRental as $key => $value) {
             // dd($key);
-            if ( $indRental['occupied'] == true ) {
+            if ($indRental['occupied'] == true) {
 
                 $rental = new ModelsRentalIncome();
                 $rental->unit_id = $indRental['id'];

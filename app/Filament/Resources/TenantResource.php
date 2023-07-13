@@ -88,11 +88,13 @@ class TenantResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('unit.name')->sortable(),
+
                 // TextColumn::make('Name')
                 //     ->getStateUsing(function (Tenant $record) {
                 //         // return whatever you need to show
                 //         return $record->first_name . ' ' . $record->l_name;
                 //     }),
+                ImageColumn::make('photo')->circular(),
                 TextColumn::make('name'),
                 TextColumn::make('id')->label('Tenant ID'),
                 TextColumn::make('created_at')->sortable()->hidden(),
@@ -106,14 +108,14 @@ class TenantResource extends Resource
                 IconColumn::make('is_primary')->boolean()->label('Primary'),
                 IconColumn::make('is_current')->boolean()->label('Current'),
                 IconColumn::make('has_parking')->boolean()->label('Parking'),
-                TextColumn::make('start_date')->label('Start Date'),
-                TextColumn::make('end_date')->label('End Date'),
-                ImageColumn::make('photo'),
+                // TextColumn::make('start_date')->label('Start Date'),
+                // TextColumn::make('end_date')->label('End Date'),
+
 
 
                 // SpatieMediaLibraryImageColumn::make('photo')->collection('tenants'),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->defaultSort('unit.name', 'asc')
             ->filters([
                 Filter::make('is_current')
                     ->query(fn (Builder $query): Builder => $query->where('is_current', true)),

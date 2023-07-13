@@ -9,11 +9,17 @@ class Unit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'meralco', 'function', 'layout', 'floor', 'rent', 'type', 'meter_type', 'property_id'];
+    protected $fillable = ['name', 'status', 'meralco', 'function', 'layout', 'floor', 'rent', 'type', 'meter_type', 'property_id'];
 
     public function property()
     {
         return $this->belongsTo(Property::class);
+    }
+
+
+    public function intents()
+    {
+        return $this->hasMany(Intent::class);
     }
 
     public function tenants()

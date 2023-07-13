@@ -16,6 +16,17 @@ class Property extends Model
         return $this->hasMany(Unit::class);
     }
 
+    public function intents()
+    {
+        return $this->hasMany(Intent::class);
+    }
+
+    public function users()
+    {
+
+        return $this->belongsToMany(User::class);
+    }
+
     public function expenses()
     {
         return $this->hasMany(Expense::class);

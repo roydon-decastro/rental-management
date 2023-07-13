@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use Carbon\Carbon;
 use App\Models\Unit;
 use App\Models\Reading;
+use App\Models\Tenant;
 use Filament\Pages\Page;
 use Filament\Pages\Actions\Action;
 use Illuminate\Support\Facades\DB;
@@ -48,14 +49,14 @@ class Billings extends Page
         //     ->get();
         // $this->units = DB::table('tenants')
         //     ->join('units', 'tenants.unit_id', '=', 'units.id')
-            // ->where('is_primary', true)
-            // ->where('is_current', true)
-            // ->limit(2)
-            // ->orderBy('units.name')
-            // ->get();
+        // ->where('is_primary', true)
+        // ->where('is_current', true)
+        // ->limit(2)
+        // ->orderBy('units.name')
+        // ->get();
         $this->prev_readings = DB::table('readings')
             ->whereMonth('readings.read_date', Carbon::now()->subMonth())
-          ->get();
+            ->get();
 
         $this->tenant_count = DB::table('tenants')
             ->join('units', 'tenants.unit_id', '=', 'units.id')
@@ -97,8 +98,7 @@ class Billings extends Page
 
         $this->prev_readings = DB::table('readings')
             ->whereMonth('readings.read_date', Carbon::now()->subMonth())
-          ->get();
-
+            ->get();
     }
 
 
@@ -125,11 +125,18 @@ class Billings extends Page
 
         foreach ($this->readingText as $indReadingText) {
             foreach ($indReadingText as $key => $value) {
-                // dd($value);
+                $tenant = DB::table('units')
+                    ->join('tenants', 'units.id', '=', 'tenants.unit_id')
+                    ->where('units.id', '=', $key)
+                    ->select('tenants.id as tenantID', 'tenants.unit_id', 'tenants.name')->first();
+                // dd($tenant->tenantID);
                 $reading = new Reading();
                 $reading->reading = $value;
+                $reading->tenant_id = $tenant ? $tenant->tenantID : null;
                 $reading->unit_id = $key;
                 $reading->read_date = $this->read_date;
+                // dd($reading);
+
                 $reading->save();
             }
             // dd($indReadingText);

@@ -26,6 +26,8 @@ class Bill extends Model
         'service_charge',
         'service_charge_rate',
         'vat',
+        'environmental_fee_rate',
+        'environmental_fee_charge',
         'total_amount_due',
         'created_at'
     ];

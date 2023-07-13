@@ -37,6 +37,8 @@ return new class extends Migration
             $table->double('service_charge', 6, 2);
             $table->double('service_charge_rate', 6, 2);
             $table->double('vat', 6, 2);
+            $table->double('environmental_fee_rate', 6, 2);
+            $table->double('environmental_fee_charge', 6, 2);
             $table->double('total_amount_due', 6, 2);
             $table->boolean('is_paid')->default(false);
             $table->timestamps();

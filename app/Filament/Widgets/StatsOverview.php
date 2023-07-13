@@ -2,10 +2,11 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Expense;
 use App\Models\Unit;
 use App\Models\Tenant;
+use App\Models\Expense;
 use App\Models\RentalIncome;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -26,6 +27,10 @@ class StatsOverview extends BaseWidget
         $total_expenses_cheque = DB::table('expenses')
             ->where('payment_mode', '=', 'cheque')
             ->sum('amount');
+        $total_applicants = DB::table('intents')
+            ->whereMonth('intents.created_at', Carbon::now())
+            ->where('status', '=', 'submitted')
+            ->count();
         $total_parking_occupied = DB::table('tenants')
             ->where('is_current', '=', true)
             ->where('has_parking', '=', true)
@@ -55,6 +60,9 @@ class StatsOverview extends BaseWidget
                 ->description('Cash: ₱' . $formatted_expenses_cash . ' | Digital: ₱' . $formatted_expenses_digital . ' | Cheque: ₱' . $formatted_expenses_cheque)
                 // ->descriptionIcon('heroicon-s-trending-up')
                 ->color('danger'),
+            // Card::make('Applicants (this month)', $total_applicants)
+            // ->description('Cash: ₱' . $formatted_expenses_cash . ' | Digital: ₱' . $formatted_expenses_digital . ' | Cheque: ₱' . $formatted_expenses_cheque)
+            // ->color('success'),
             Card::make('Occupied Units', Tenant::all()
                 ->where('is_primary', '=', true)
                 ->count())

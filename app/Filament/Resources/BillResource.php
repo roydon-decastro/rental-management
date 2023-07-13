@@ -31,6 +31,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,7 +46,7 @@ class BillResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationLabel = 'Water Bills';
+    protected static ?string $navigationLabel = 'Bills';
     protected static ?string $navigationGroup = 'Water Transactions';
 
     public static function form(Form $form): Form
@@ -91,7 +92,7 @@ class BillResource extends Resource
                                     ->where('is_primary', '=', true)->first();
                                 $reading = Reading::find($get('reading_id'));
                                 $readingAll = Reading::all()->where('unit_id', '=', $chosen_unit_id)->sortByDesc('created_at')->pluck('read_date', 'id')->toArray();
-                                $readingAllArray = array_combine(range(0, count($readingAll)-1), array_keys($readingAll));;
+                                $readingAllArray = array_combine(range(0, count($readingAll) - 1), array_keys($readingAll));;
                                 // dd($readingAll);
                                 // dd($readingAllArray[1]);
 
@@ -235,7 +236,8 @@ class BillResource extends Resource
                                 $set('curr_balance', $current_bal);
                                 // $set('service_charge', $get('curr_balance') * ($get('service_charge_rate') / 100)); // fyi ok
                                 $set('service_charge', number_format($get('curr_balance') * ($get('service_charge_rate') / 100), 2)); // fyi testing
-                                $set('total_amount_due', $get('curr_balance') + $get('service_charge') + $get('prev_balance'));
+                                $set('environmental_fee_charge', number_format($get('curr_balance') * ($get('environmental_fee_rate') / 100), 2)); // fyi testing
+                                $set('total_amount_due', $get('curr_balance') + $get('service_charge') + $get('prev_balance') + $get('environmental_fee_charge'));
                             })
                             ->reactive(),
                     ])->columns(2),
@@ -281,6 +283,15 @@ class BillResource extends Resource
                                 return $vats->rate;
                             })
                             ->disabled(),
+                        TextInput::make('environmental_fee_rate')
+                            ->default(function (callable $get) {
+                                $environmentals = DB::table('environmentals')->latest('created_at')->first();
+                                return $environmentals->rate;
+                            })
+                            ->disabled(),
+                        TextInput::make('environmental_fee_charge')
+                            ->disabled(),
+
 
                     ])->columns(2),
 
@@ -304,7 +315,7 @@ class BillResource extends Resource
     // protected function getTableQuery(): Builder
     // {
     //     $bills = DB::table('bills')
-  	// 		->whereMonth('bills.created_at', 3)
+    // 		->whereMonth('bills.created_at', 3)
     //         ->get();
     //     return $bills;
     //     // return Bill::query();
@@ -315,6 +326,9 @@ class BillResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('unit_name')->sortable()->label('Unit'),
+                // ImageColumn::make('tenant.photo')->circular(),
+
+                // TextColumn::make('tenant.name')->label('me'),
                 TextColumn::make('tenant_name')->sortable()->label('Name'),
                 TextColumn::make('prev_read_date')->label('From Date')->sortable(),
                 TextColumn::make('curr_read_date')->label('To Date')->sortable(),
@@ -344,7 +358,7 @@ class BillResource extends Resource
                         // dd($record->unit_id);
                         // dd($data);
                         $tenant = Unit::find($record->unit_id)->tenants()->where('is_current', '=', true)
-                                    ->where('is_primary', '=', true)->first();
+                            ->where('is_primary', '=', true)->first();
                         // dd($tenant);
                         $payment = new Payment;
                         $paid_amount = $data['pay_amount'];
@@ -366,18 +380,16 @@ class BillResource extends Resource
                             $overpayment->save();
                             // dd('Sobra ang bayad ng ' . $overpaid_amount);
                         }
-
-
                     })
                     ->requiresConfirmation()
                     ->modalButton('Add Payment')
-                    // ->disabled(function (Bill $record): bool {
-                    //     if ($record->is_paid == true) {
-                    //         return true;
-                    //     } else {
-                    //         return false;
-                    //     }
-                    // })
+                    ->disabled(function (Bill $record): bool {
+                        if ($record->is_paid == true) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
 
 
 

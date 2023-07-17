@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         // step Expense Category
-        // $this->call(ExpenseCategorySeeder::class);
+        $this->call(ExpenseCategorySeeder::class);
         // step Province
         $this->call(ProvinceSeeder::class);
         // step City

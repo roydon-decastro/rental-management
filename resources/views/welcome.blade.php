@@ -120,7 +120,7 @@
                                 <a href="{{ url('/register') }}">
                                     <button
                                         class="w-full rounded-xl border border-indigo-700 bg-indigo-600 py-4 px-6 font-semibold text-white transition duration-200 ease-in-out hover:bg-indigo-700 focus:ring focus:ring-indigo-300">
-                                        Register For Free
+                                        Register Now
                                     </button>
                                 </a>
                             </div>

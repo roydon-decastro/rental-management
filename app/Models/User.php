@@ -50,7 +50,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessFilament(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 'admin' || str_ends_with($this->email, '@arrc-rentals.com');
     }
 
     public function intents()

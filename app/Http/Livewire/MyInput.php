@@ -32,7 +32,8 @@ class MyInput extends Component
 
 
     // public function mount($name) {
-    public function mount($unit, $date, $tenant_count, $index) {
+    public function mount($unit, $date, $tenant_count, $index)
+    {
 
         // dd($unit);
         // dd($tenant_count);
@@ -51,7 +52,7 @@ class MyInput extends Component
 
     {
         //  dd($this->readingText);
-        dd($this->date);
+        // dd($this->date);
         //  dd($this->name);
         $reading = new Reading();
         $reading->reading = $this->readingText;
@@ -69,7 +70,7 @@ class MyInput extends Component
 
     {
         //  dd($this->readingText);
-        dd("This wont work");
+        // dd("This wont work");
         //  dd($this->name);
         // $reading = new Reading();
         // $reading->reading = $this->readingText;

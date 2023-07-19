@@ -104,7 +104,7 @@ class Billings extends Page
 
     public function addReading2($unit_id, $readingTextx)
     {
-        dd($readingTextx);
+        // dd($readingTextx);
         $reading = new Reading();
         $reading->reading = $this->readingTextx;
         $reading->read_date = today();

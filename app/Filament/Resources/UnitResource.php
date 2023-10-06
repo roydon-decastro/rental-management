@@ -41,6 +41,13 @@ class UnitResource extends Resource
                         TextInput::make('name')->required()->maxLength(255),
                         TextInput::make('meralco')->required()->maxLength(255),
                         TextInput::make('rent')->required(),
+                        Select::make('status')
+                            ->options([
+                                'available' => 'Available',
+                                'occupied' => 'Occupied',
+                                'maintenance' => 'Maintenance',
+                                'reserved' => 'Reserved',
+                            ])->default('Available')->required(),
                         Select::make('floor')
                             ->options([
                                 '1st' => '1st',

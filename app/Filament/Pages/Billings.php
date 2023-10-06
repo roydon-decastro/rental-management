@@ -69,12 +69,13 @@ class Billings extends Page
         // $this->units = Unit::first()->get();
         // dd($this->units);
     }
-    protected function getActions(): array
-    {
-        return [
-            Action::make('settings')->action('openSettingsModal'),
-        ];
-    }
+
+    // protected function getActions(): array
+    // {
+    //     return [
+    //         Action::make('settings')->action('openSettingsModal'),
+    //     ];
+    // }
 
     public function updated()
     // public function testupdated()

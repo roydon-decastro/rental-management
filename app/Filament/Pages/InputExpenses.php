@@ -11,10 +11,10 @@ class InputExpenses extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static string $view = 'filament.pages.input-expenses';
-
+    protected static ?string $navigationLabel = 'Add Expenses';
     protected static ?string $navigationGroup = 'Expenses';
 
-    public $expenses_count;
+    public $expenses_count = 1;
     public $expense_categories;
     public $expensesArray = [];
 
@@ -40,6 +40,11 @@ class InputExpenses extends Page
             $expense = new Expense();
             $expense->name = $single_expense['name'];
             $expense->expense_category_id = isset($single_expense['expense_category_id']) ? $single_expense['expense_category_id'] : null;
+            $expense_category = DB::table('expense_categories')
+                ->select('name')
+                ->where('id', '=', $single_expense['expense_category_id'])
+                ->first();
+            $expense->category_name = $expense_category->name;
             $expense->payment_date = isset($single_expense['payment_date']) ? $single_expense['payment_date'] : null;
             $expense->amount = isset($single_expense['amount']) ? $single_expense['amount'] : null;
             $expense->payment_mode = isset($single_expense['payment_mode']) ? $single_expense['payment_mode'] : null;

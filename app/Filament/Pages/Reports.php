@@ -12,12 +12,13 @@ class Reports extends Page
     protected static string $view = 'filament.pages.reports';
 
     public $month = '';
+    public $expense_month = '';
 
     public function submit()
     {
         // dd($this->month);
         // $bills = DB::table('bills')
-  		// 	->whereMonth('bills.created_at', $this->month)
+        // 	->whereMonth('bills.created_at', $this->month)
         //     ->get();
         // dd($bills);
         // $url = 'http://127.0.0.1:8000/';

@@ -63,8 +63,9 @@ class StatsOverview extends BaseWidget
             // Card::make('Applicants (this month)', $total_applicants)
             // ->description('Cash: ₱' . $formatted_expenses_cash . ' | Digital: ₱' . $formatted_expenses_digital . ' | Cheque: ₱' . $formatted_expenses_cheque)
             // ->color('success'),
-            Card::make('Occupied Units', Tenant::all()
-                ->where('is_primary', '=', true)
+            Card::make('Occupied Units', Unit::all()
+                // ->where('is_primary', '=', true)
+                ->where('status', '=', 'occupied')
                 ->count())
                 ->description('Out of ' . Unit::all()->count() . ' units, with ' . $total_parking_occupied . ' parking')
                 ->url('admin/units/'),

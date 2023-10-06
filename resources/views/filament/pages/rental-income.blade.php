@@ -12,7 +12,8 @@
                 {{-- <h4 class="block mr-4 mt-4 mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $occupied_count }} Units</h4> --}}
 
             </div>
-            <div class=" columns-1 sm:columns-2 lg:columns-2">
+            {{-- <div class=" columns-1 sm:columns-2 lg:columns-2"> --}}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 @foreach ($units as $index => $unit)
                     {{-- @dd($unit->tenantPhoto) --}}
                     {{-- @php
@@ -30,34 +31,34 @@
                             <div class="flex items-center px-4 gap-2">
                                 <h2 class="text-xs font-normal text-blue-600 dark:text-white">{{ $unit->tenantName }}
                                 </h2>
-                                <img class=" w-8 h-8 rounded-full" src="{{ asset('storage/' . $unit->tenantPhoto) }}"
-                                    alt="">
+                                {{-- <img class=" w-8 h-8 rounded-full" src="{{ asset('storage/' . $unit->tenantPhoto) }}"
+                                    alt=""> --}}
                             </div>
                         </div>
                         <hr class="mb-4  ">
-                        <div class="flex ml-4">
-                            <div class="mr-4">
+                        <div class="grid grid-cols-1 lg:flex ml-4 p-4 gap-4">
+                            <div class="lg:mr-4">
                                 <label for="rental_income.{{ $index }}.income"
                                     class="block  mr-4 text-xs font-base   dark:text-white">Rent</label>
                                 <input wire:model="rental_income.{{ $index }}.income"
-                                    class="w-28 rounded-lg border-slate-200" type="number" step="100">
+                                    class="w-full lg:w-28 rounded-lg border-slate-200" type="number" step="100">
                                 {{-- <p class="text-gray-400 text-xs">PHP {{$unit->rent}}</p> --}}
                             </div>
-                            <div class="mr-4">
+                            <div class="">
                                 <label for="rental_income.{{ $index }}.parking_fee"
                                     class="block text-xs font-base   dark:text-white">Parking Fee</label>
                                 <input wire:model="rental_income.{{ $index }}.parking_fee"
-                                    class="w-28 border border-slate-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+                                    class="w-full lg:w-28 border border-slate-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                                     type="number" step="50">
                             </div>
                             <div>
                                 <label for="rental_income.{{ $index }}.date"
                                     class="block mr-4 text-xs font-base   dark:text-white">Pay Date</label>
                                 <input wire:model="rental_income.{{ $index }}.date"
-                                    class="border border-slate-200 text-slate-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"
+                                    class="w-full border border-slate-200 text-slate-900 text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
                                     type="date">
                             </div>
-                            <div class="flex ml-4">
+                            <div class="flex">
                                 <div class="flex items-center pr-4">
                                     <label for="rental_income.{{ $index }}.occupied"
                                         class="mr-2 text-xs font-normal text-gray-900 dark:text-gray-300">Occupied</label>

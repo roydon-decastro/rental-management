@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="mt-3 space-y-3">
+                        {{-- <div class="mt-3 space-y-3">
                             <button type="button"
                                 class="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none">
                                 <span class="mr-2 inline-block">
@@ -101,7 +101,7 @@
                                 </span>
                                 Sign in with Facebook
                             </button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="h-full w-full">

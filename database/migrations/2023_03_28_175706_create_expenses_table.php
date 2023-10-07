@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('expense_category_id')->constrained();
             $table->string('category_name');
             $table->date('payment_date')->nullable();
-            $table->double('amount', 6, 2);
+            $table->double('amount', 12, 2);
             $table->enum('payment_mode', ['cash', 'cheque', 'digital']);
             $table->string('vendor')->nullable();
             $table->string('or_num')->nullable();

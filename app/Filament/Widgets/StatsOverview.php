@@ -15,8 +15,8 @@ class StatsOverview extends BaseWidget
 {
     protected function getCards(): array
     {
-        $total_rent = DB::table('rental_incomes')->sum('income');
-        $total_parking = DB::table('rental_incomes')->sum('parking_fee');
+        $total_rent = DB::table('rental_incomes')->sum('amount');
+        // $total_parking = DB::table('rental_incomes')->sum('parking_fee');
         $total_expenses = DB::table('expenses')->sum('amount');
         $total_expenses_cash = DB::table('expenses')
             ->where('payment_mode', '=', 'cash')
@@ -35,14 +35,15 @@ class StatsOverview extends BaseWidget
             ->where('is_current', '=', true)
             ->where('has_parking', '=', true)
             ->count();
-        $total_income = $total_rent + $total_parking;
+        // $total_income = $total_rent + $total_parking;
+        $total_income = $total_rent;
         $formatted_income = number_format($total_income);
         $formatted_expenses = number_format($total_expenses);
         $formatted_expenses_cash = number_format($total_expenses_cash);
         $formatted_expenses_digital = number_format($total_expenses_digital);
         $formatted_expenses_cheque = number_format($total_expenses_cheque);
         $formatted_rent = number_format($total_rent);
-        $formatted_parking = number_format($total_parking);
+        // $formatted_parking = number_format($total_parking);
         return [
             // Card::make('Primary Tenants', Tenant::all()->where('is_current', '=', true)->where('is_primary', '=', true)->count())
             //     ->url('admin/tenants/')
@@ -50,7 +51,8 @@ class StatsOverview extends BaseWidget
 
             Card::make('Total Income', '₱ ' . $formatted_income)
                 ->url('admin/tenants/')
-                ->description('Rent: ₱' . $formatted_rent . ' Parking: ₱' . $formatted_parking)
+                // ->description('Rent: ₱' . $formatted_rent . ' Parking: ₱' . $formatted_parking)
+                ->description('Rent: ₱' . $formatted_rent)
                 ->descriptionIcon('heroicon-s-trending-up')
                 ->color('success'),
 

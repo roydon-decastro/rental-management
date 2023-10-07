@@ -59,7 +59,7 @@ class ReadingResource071223 extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('unit.name')->sortable(),
+                TextColumn::make('unit.name')->sortable()->searchable(),
                 TextColumn::make('tenant.name')->sortable(),
                 TextColumn::make('read_date')->date()->sortable(),
                 TextColumn::make('reading'),

@@ -6,6 +6,8 @@ use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ExpenseReportController;
+use App\Http\Controllers\IncomeReportController;
+use App\Http\Controllers\SummaryReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/receipt/{payment}', ReceiptController::class)->name('receipt');
     Route::get('/billpermonth/{month}', BillPerMonthReport::class)->name('billpermonth');
     Route::get('/expensereport/{month}', ExpenseReportController::class)->name('expensereport');
+    Route::get('/incomereport/{month}', IncomeReportController::class)->name('incomereport');
+    Route::get('/summaryreport/{month}', SummaryReportController::class)->name('summaryreport');
 });
 
 

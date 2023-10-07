@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('rental_incomes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('unit_id')->constrained();
-            $table->foreignId('tenant_id')->constrained();
-            $table->integer('rent')->nullable();
-            $table->integer('income')->nullable();
+            $table->foreignId('unit_id')->constrained()->nullable();
+            $table->foreignId('tenant_id')->constrained()->nullable();
+            $table->double('amount', 12, 2);
+            $table->enum('category', ['rent', 'parking', 'advance/deposit', 'interest', 'sales', 'labor', 'supplies', 'repair', 'fine', 'others']);
+            $table->enum('payment_mode', ['cash', 'cheque', 'digital']);
             $table->date('pay_date')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -118,3 +118,12 @@ $expensesByCategory = DB::table('expenses')
     ->select('expense_category_id','expense_categories.name', DB::raw('SUM(amount) as total_amount'))
     ->groupBy('expense_category_id')
     ->get();
+
+
+        $incomes = DB::table('rental_incomes')
+		  	->leftJoin('tenants', 'rental_incomes.tenant_id', '=', 'tenants.id')
+		  	->leftJoin('units', 'rental_incomes.unit_id', '=', 'units.id')
+            ->whereMonth('rental_incomes.pay_date', 9)
+		  ->select('rental_incomes.*','tenants.name as TenantName', 'units.name as UnitName')
+            ->orderBy('pay_date')
+            ->get();

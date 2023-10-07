@@ -62,7 +62,7 @@ class ExpenseResource extends Resource
                         TextInput::make('or_num')->label('OR Number')->maxLength(255),
                         Textarea::make('notes')
 
-                    ])->columns(4)
+                    ])->columns(3)
                 //
             ]);
     }

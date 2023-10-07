@@ -36,7 +36,8 @@ class RentalIncomeChart extends LineChartWidget
                 end: now()->endOfYear(),
             )
             ->perMonth()
-            ->sum('income');
+            // ->sum('income');
+            ->sum('amount');
 
         // $trend = DB::table('rental_incomes')
         //     ->select(DB::raw('DATE(pay_date) as date'), DB::raw('COUNT(*) as value'))

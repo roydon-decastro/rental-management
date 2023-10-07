@@ -13,6 +13,9 @@ class Reports extends Page
 
     public $month = '';
     public $expense_month = '';
+    public $income_month = '';
+    public $summary_month = '';
+    public $year = '2023';
 
     public function submit()
     {

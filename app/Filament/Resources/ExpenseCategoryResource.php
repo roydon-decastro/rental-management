@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ExpenseCategoryResource\Pages;
 use App\Filament\Resources\ExpenseCategoryResource\RelationManagers;
+use Filament\Forms\Components\TextInput;
 
 class ExpenseCategoryResource extends Resource
 {
@@ -26,7 +27,7 @@ class ExpenseCategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->required()->maxLength(255),
             ]);
     }
 

@@ -87,15 +87,15 @@ class TenantResource extends Resource
 
         return $table
             ->columns([
-                TextColumn::make('unit.name')->sortable(),
+                TextColumn::make('unit.name')->sortable()->searchable(),
 
                 // TextColumn::make('Name')
                 //     ->getStateUsing(function (Tenant $record) {
                 //         // return whatever you need to show
                 //         return $record->first_name . ' ' . $record->l_name;
                 //     }),
-                ImageColumn::make('photo')->circular(),
                 TextColumn::make('name'),
+                ImageColumn::make('photo')->circular(),
                 TextColumn::make('id')->label('Tenant ID'),
                 TextColumn::make('created_at')->sortable()->hidden(),
                 TextColumn::make('rent'),
